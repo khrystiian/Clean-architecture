@@ -9,7 +9,7 @@ using TrainApp.Core.Entity;
 
 namespace UI.Controllers
 {
-    // Allow CORS for all origins. (Caution!)
+    // Allow CORS for all origins. 
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class TripController : ApiController
     {
