@@ -1,0 +1,23 @@
+<!-- <app-main-nav></app-main-nav> -->
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">       
+        <h3>WORLD TRAVEL</h3>
+        <span class="spacer"></span>
+        <span class="spacer"></span>
+        <span class="spacer"></span>
+        <span class="spacer"></span>
+        <span class="spacer"></span>
+        <span class="spacer"></span>
+        <span class="spacer"></span>
+        <span class="spacer"></span>
+        <span class="spacer"></span>
+        <span>{{firstName}}</span>
+        <span class="spacer"></span>
+        <a href="login" *ngIf="firstName === null">Login/Register</a>
+        <a href="login" *ngIf="firstName !== null">Logout</a>
+        <span class="spacer"></span>
+      </mat-toolbar>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+<router-outlet></router-outlet> 

@@ -1,0 +1,52 @@
+.btn {
+    width:100%;
+    font-family: "via_office", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 2em;    
+}
+label{
+    float: left;
+    text-align: left;
+}
+.mat-radio-button ~ .mat-radio-button {
+    padding: 2.5em;
+  }
+hr{
+    border-top: 1px solid red;
+}
+.container{
+ border: 3px double gray;
+ width: 95%;
+}
+
+.ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid #42A948; 
+  }
+  
+  .ng-invalid:not(form)  {
+    border-left: 5px solid #a94442; 
+  }
+
+/* Always set the map height explicitly to define the size of the div
+ * element that contains the map. */
+#map {
+  height: 100%;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#right-panel{
+  height: 500px;
+  /* width: 50%;  */
+  overflow-y: scroll;
+}
+h3{
+  text-align: center;
+}
+#confirmForm h4{
+  text-align: left;
+}

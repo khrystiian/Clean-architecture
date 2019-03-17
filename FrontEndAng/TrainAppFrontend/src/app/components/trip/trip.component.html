@@ -1,0 +1,184 @@
+<br />
+<br />
+<div class="row" style="width:100% !important">
+  <!--Form container-->
+  <div class="col-md-12"  id="main-container">
+<div class="container">
+  <button type="button" class="btn btn-danger" (click)="toggle()" data-target="#tripForm">Search trips all around
+    Europe</button>
+  <br>
+  <br>
+  <br>
+  <div>
+    <form id="tripForm" *ngIf="showForm" (ngSubmit)="onSubmit()" #tripForm="ngForm">
+      <hr>
+      <br>
+      <br>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputFrom">From:</label>
+          <input type="text" class="form-control" id="inputFrom" placeholder="Origin Address" required
+            [(ngModel)]="model.HomeAddress" name="homeAddress" #from="ngModel">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputTo">To:</label>
+          <input type="text" class="form-control" id="inputTo" placeholder="Destination Address" required
+            [(ngModel)]="model.DestinationAddress" name="destinationAddress" #to="ngModel">
+        </div>
+      </div>
+      <br />
+      <br />
+      <hr>
+      <br />
+      <div class="form-row">
+        <div class="col-md-4">
+          <div class="row">
+            <div class="form-group col-md-6">
+              <mat-radio-group name="TripType" [(ngModel)]="model.DepartureArrival" required #TripType="ngModel">
+                <mat-radio-button value="Departure" color="primary" class="person-radio-button" style="margin-left:21px">Departure</mat-radio-button>
+                <mat-radio-button value="Arrival" color="accent" class="person-radio-button"> Arrival</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="inputTime" style="width:100%">
+                Time:
+                <input name="Time" [owlDateTimeTrigger]="dt" [owlDateTime]="dt" type="text" class="form-control"
+                  id="inputTime" placeholder="Select Time" [(ngModel)]="model.Time" required #Time="ngModel">
+                <owl-date-time #dt></owl-date-time>
+              </label>
+            </div>
+            <div class="form-group col-md-2"></div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="row">
+            <div class="form-group col-md-4">
+              <mat-form-field>
+                <mat-select placeholder="!! Choose a trip" [(ngModel)]="model.TravelVia" name="v" required
+                  #TripModel="ngModel">
+                  <mat-option *ngFor="let v of travelMode" [value]="v.value">
+                    {{v.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <p style="font-weight:bolder"> Travel via: {{[model.TravelVia]}} </p>
+            </div>
+            <div class="form-group col-md-4">
+              <mat-form-field>
+                <mat-select placeholder="!! Choose a transit mode" [(ngModel)]="model.TransitMode" name="p" required>
+                  <mat-option *ngFor="let p of transitMode" [value]="p.value">
+                    {{p.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <p style="font-weight:bolder"> Transit mode via: {{[model.TransitMode]}} </p>
+            </div>
+            <div class="form-group col-md-4">
+              <mat-form-field>
+                <mat-select placeholder="!! Routing preferences" [(ngModel)]="model.Preference" name="q" required>
+                  <mat-option *ngFor="let q of travelPreferences" [value]="q.value">
+                    {{q.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <p style="font-weight:bolder"> Calculated routing preferences {{[model.Preference]}} </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <hr>
+      <div class="row">
+        <div class="col-3"></div>
+        <div class="col-3"></div>
+        <div class="col-3"></div>
+        <div class="col-3" style="float:right;">
+          <button type="submit" class="btn btn-outline-secondary" style="margin-bottom:20px; padding-left:10%;" [disabled]="!tripForm.form.valid" >Search
+            trip</button>
+         <!-- [disabled]="!tripForm.form.valid" -->
+        </div>
+      </div>
+    </form>
+  </div>
+  <!--Map container-->
+  <div class="map-container" style="margin-left:15px">
+    <div class="col-md-12" id="map" style="width:100%;height:500px; margin-bottom:30px;"></div>
+    <div class="col-md-0" id="right-panel"></div>
+
+    <div class="btn-group" style="float:right;">
+      <button type="button" class="btn btn-outline-success" id="continueToOrder" (click)="continue()"
+        style="margin-bottom:20px; width:180px; text-align:center">Continue</button>
+    </div>
+  </div>
+</div> 
+</div>
+<!--Order tickets form-->
+ <div class="col-md-0" id="second-container" *ngIf="secondContainerFlag" style="width:610px;margin-top:12em;"> <!--secondContainerFlag -->
+  <div class="container">
+  <br/>
+      <h3>Order tickets</h3>
+  <br/>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <mat-form-field>
+                <mat-select placeholder="Passengers" [formControl]="passengersAge" multiple>
+                  <mat-select-trigger>
+                    {{passengersAge.value ? passengersAge.value[0] : ''}}
+                    <span *ngIf="passengersAge.value?.length > 1" class="example-additional-selection">
+                      (+{{passengersAge.value.length - 1}} {{passengersAge.value?.length === 2 ? 'other' : 'others'}})
+                    </span>
+                  </mat-select-trigger>
+                  <mat-option *ngFor="let p of passengerAgeList" [value]="p">{{p}}</mat-option>
+                </mat-select>
+              </mat-form-field> 
+          </div>
+          <div class="form-group col-md-6">
+              <mat-form-field>
+                <mat-select placeholder="Number of seats" [(ngModel)]="model.Seats" name="s">
+                  <mat-option *ngFor="let s of seats" [value]="s.viewValue">
+                    {{s.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field> 
+            </div>               
+    </div>
+    <div class="container" style="background-color:#FBDFE7;font-family:'Courier New'">
+      <div class="col-md-6" id="confirmForm">
+        <h4 style="font-weight:bold">From:</h4>
+        <h4 style="font-weight:bold">To:</h4>
+        <h4 style="font-weight:bold">Departure/Arrival:</h4>         
+        <h4 style="font-weight:bold">Time:</h4>
+        <h4 style="font-weight:bold">Travel by:</h4>
+        <h4 style="font-weight:bold">Transit:</h4>
+        <h4 style="font-weight:bold">Route preference:</h4>
+        <h4 style="font-weight:bold">Seats:</h4>
+       <h4 style="font-weight:bold">Passengers:</h4>
+        <br/>
+        <h3 style="font-weight:bold;float: right !important;">TOTAL PRICE:</h3>
+      </div>
+    
+    <div class="col-md-6" id="confirmForm">
+      <h4>{{model.HomeAddress}}</h4>
+      <h4>{{model.DestinationAddress}}</h4>
+      <h4>{{model.DepartureArrival}}</h4>         
+      <h5>{{model.DepartureTime |date:'medium'}}{{model.ArrivalTime |date:'medium'}}</h5>    
+      <h4>{{model.TravelVia}}</h4>    
+      <h4>{{model.TransitMode}}</h4>   
+      <h4>{{model.Preference}}</h4>   
+      <h4>{{model.Seats}}</h4> 
+      <h4>{{passAge}}</h4>      
+      <br/>
+    <h3 style="font-weight:bolder; float: left !important;" *ngIf="tripPrice > 0">{{tripPrice}} Dkk</h3>
+  </div>
+</div>
+    <div class="btn-group" *ngIf="!tripPrice" style="width:100% !important">
+      <button type="button" class="btn btn-outline-info" (click)="calculateTripPrice()"
+        style="margin-bottom:20px;">Calculate price</button>
+    </div>
+    <div class="btn-group" *ngIf="tripPrice" style="width:100% !important">
+      <button type="button" class="btn btn-outline-success" (click)="finish()"
+        style="margin-bottom:20px;">Finish</button>
+    </div>
+  </div>
+  </div>
+</div>

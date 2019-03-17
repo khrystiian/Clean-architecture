@@ -1,0 +1,52 @@
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<div class="container">
+  <br />
+  <br />
+  <h2>Register</h2>
+  <br />
+  <br />
+  <form id="registerForm" (ngSubmit)="onSubmit()" #registerForm="ngForm">
+      <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text" class="form-control" id="firstName" placeholder="Type your first name" required
+            [(ngModel)]="model.FirstName" name="fistName" #firstName="ngModel" />
+        </div>
+    <br />
+    <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input type="text" class="form-control" id="lastName" placeholder="Type your last name" required
+          [(ngModel)]="model.LastName" name="lastName" #lastName="ngModel" />
+      </div>
+      <br />
+      <div class="form-group">
+          <label for="address">Address</label>
+          <input type="address" class="form-control" id="address" placeholder="Type your address" required
+            [(ngModel)]="model.Address" name="address" #address="ngModel" />
+        </div>
+    <br />
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" id="email" placeholder="Type your email" required
+          [(ngModel)]="model.Email" name="email" #email="ngModel" />
+      </div>
+    <br />
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" placeholder="Type your password" required
+          [(ngModel)]="model.Password" name="password" #password="ngModel" />
+      </div>
+    <br />
+    <div class="form-group" style="text-align: center">
+      <button [disabled]="loading" class="btn btn-primary">Register</button>
+      <img *ngIf="loading"
+        src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+      <a href="login" class="btn btn-link">Cancel</a>
+    </div>
+  </form>
+
+</div>
