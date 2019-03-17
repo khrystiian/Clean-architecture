@@ -17,7 +17,7 @@ declare var google: any;
 })
 /**
  * No authentication
- * add switch for when toggling between TRANSIT and others- to make receipt dissapear.
+ * add switch for when toggling between TRANSIT and others- to make receipt dissapear
  */
 export class TripComponent implements OnInit, DoCheck  {
   username: string;
