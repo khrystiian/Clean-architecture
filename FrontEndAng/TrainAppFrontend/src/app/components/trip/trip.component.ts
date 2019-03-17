@@ -17,7 +17,7 @@ declare var google: any;
 })
 /**
  * No authentication
- * add switch for when toggling between TRANSIT and others- to make receipt dissapear
+ * add switch for when toggling between TRANSIT and others- to make receipt dissapear.
  */
 export class TripComponent implements OnInit, DoCheck  {
   username: string;
@@ -83,10 +83,7 @@ export class TripComponent implements OnInit, DoCheck  {
       this.model.DepartureTime = null;
     }  
     (this.model.TravelVia === 'TRANSIT') ? document.getElementById('continueToOrder').style.display = 'block' : document.getElementById('continueToOrder').style.display = 'none';
-
-
-    //  this.model = {ArrivalTime: null, DepartureTime: null, DestinationAddress: "vejle", HomeAddress:"aalborg", TransitMode: 'BUS', 
-    // TripType: null, TripMode: 'TRANSIT', Time: null, Seats: 5, PassengerAge: null, Preferences: null};    
+ 
     this.initMap(this.model);
   }
 
