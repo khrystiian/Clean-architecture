@@ -20,7 +20,6 @@ declare var google: any;
  * add switch for when toggling between TRANSIT and others- to make receipt dissapear.
  */
 export class TripComponent implements OnInit, DoCheck  {
-  username: string;
   rootObject: RootObject;
   tripPrice: any;
   models: any;
@@ -57,7 +56,7 @@ export class TripComponent implements OnInit, DoCheck  {
   ];
   passengerAgeList: string[] = ['0-11 years old', '12-15 years old', '16-25 years old', 'Adult', '10 tickets'];
 
-  constructor(private passengerService: PassengerService, private http: HttpClient, private tripService: TripService) { }
+  constructor(private tripService: TripService) { }
 
 
   ngOnInit() { 
@@ -89,10 +88,8 @@ export class TripComponent implements OnInit, DoCheck  {
   }
 
   continue() {
-    this.passengerService.navbarUsername.subscribe(usr => {
-      this.secondContainerFlag = true;
-      this.username = usr;
-      if (usr === null) {
+    this.secondContainerFlag = true;
+    if (localStorage.length === 0) {
         alert("Please Login or Register to order tickets")      
       } else {
         document.getElementById("main-container").className = 'col-md-8';
@@ -100,7 +97,6 @@ export class TripComponent implements OnInit, DoCheck  {
           document.getElementById("second-container").className = 'col-md-4';
         }
       }
-    });
   }
 
   public initMap(model: TripForm): void {
@@ -171,9 +167,7 @@ export class TripComponent implements OnInit, DoCheck  {
   calculateTripPrice(){
     var root = this.rootObject.routes[0].legs[0];
     root.passengersAge = this.passengersAgeList;
-    //root.steps[] = this.model.Seats;
-    root.Username = this.username;
-    console.log(this.rootObject)
+    root.seats = this.model.Seats;
     this.tripService.calculatePrice(this.rootObject).subscribe(response => this.tripPrice = response) //check here
 }
   finish(){
@@ -191,7 +185,6 @@ export class TripComponent implements OnInit, DoCheck  {
 var rootObjectSteps: Step[] = [];
    for (let i = 0; i < response.steps.length; i++) {
      var transitDetail: TransitDetails;
-     console.log(response.steps[i].distance.text)
      if (response.steps[i].transit === null || response.steps[i].transit === undefined) {
        transitDetail = {
          arrival_stop: null,

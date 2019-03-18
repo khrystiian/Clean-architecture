@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.firstName = localStorage.getItem(localStorage.key(0)); //set the name in navbar.
+
   }
 
   logout() {

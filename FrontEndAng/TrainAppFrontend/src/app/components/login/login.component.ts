@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Passenger } from 'src/app/shared/models/Passenger';
 import { Router } from '@angular/router';
 import { PassengerService } from 'src/app/shared/services/passenger.service';
