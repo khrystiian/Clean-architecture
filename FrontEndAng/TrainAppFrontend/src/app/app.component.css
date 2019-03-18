@@ -3,18 +3,21 @@
     flex: 1 1 auto
 }
 
-  .sidenav .mat-toolbar {
-    background: inherit;
-  }
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.spacer{
+  flex: 1 1 auto;
+}
+.spacer2 {
+  flex: 0.2 0.2 auto;
+}
   
-  .spacer{
-    flex: 1 1 auto;
-  }
-  
-  .mat-toolbar a{
-    display: inline-block;
-    margin: 0 10px;
-    color: white;
-    text-decoration: none;
-  
-  }
+.mat-toolbar a{
+  display: inline-block;
+  margin: 0 10px;
+  color: white;
+  text-decoration: none;
+
+}

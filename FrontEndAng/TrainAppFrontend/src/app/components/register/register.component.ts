@@ -10,20 +10,19 @@ import { PassengerService } from 'src/app/shared/services/passenger.service';
 })
 export class RegisterComponent implements OnInit {
  public model: Passenger = new Passenger();
- models: any;
 
   constructor(private router: Router, private passengerService: PassengerService) { }
 
   ngOnInit() {
-    this.model.FirstName = "Andrei";
   }
 
-  onSubmit(){
-    this.passengerService.addPassenger(this.model).subscribe(model => this.models.push(model)); 
-    this.router.navigateByUrl('');
+  onSubmit() {
+    this.passengerService.addPassenger(this.model).subscribe(() => {
+      localStorage.setItem("blank", "blank");
+      localStorage.setItem(this.model.Email, this.model.FirstName);
+      location.reload();
+      this.router.navigateByUrl('');
+    }); 
   }
-
-  // getLoggedInUser(): Observable<string>{
-  //   return this.model.FirstName;
-  // }
+  
 }

@@ -1,8 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Passenger } from './shared/models/Passenger';
-import { RegisterComponent } from './components/register/register.component';
-import { PassengerService } from './shared/services/passenger.service';
-import { LoginComponent } from './components/login/login.component';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -10,14 +6,16 @@ import { LoginComponent } from './components/login/login.component';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  firstName: string;
+  firstName: string = null;
 
-  constructor(private passengerService: PassengerService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.passengerService.navbarUsername.subscribe(firstName => {
-      this.firstName = firstName;
-    });
+    this.firstName = localStorage.getItem(localStorage.key(0)); //set the name in navbar.
+  }
+
+  logout() {
+    localStorage.clear(); //clear localstorage =?
   }
 
 }

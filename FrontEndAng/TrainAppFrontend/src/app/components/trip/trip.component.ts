@@ -63,6 +63,7 @@ export class TripComponent implements OnInit, DoCheck  {
   ngOnInit() { 
     document.getElementById('continueToOrder').style.display = 'none';
     this.initMap(null);
+    
   }
 
   ngDoCheck() { 

@@ -2,7 +2,7 @@
 <mat-sidenav-container class="sidenav-container">
     <mat-sidenav-content>
       <mat-toolbar color="primary">       
-        <h3>WORLD TRAVEL</h3>
+        <a href="">WORLD TRAVEL</a>
         <span class="spacer"></span>
         <span class="spacer"></span>
         <span class="spacer"></span>
@@ -12,10 +12,10 @@
         <span class="spacer"></span>
         <span class="spacer"></span>
         <span class="spacer"></span>
-        <span>{{firstName}}</span>
-        <span class="spacer"></span>
+        <span *ngIf="firstName !== null" style="color:#cfcfcf"> Welcome {{firstName}} !</span>
+        <span class="spacer2"></span>
         <a href="login" *ngIf="firstName === null">Login/Register</a>
-        <a href="login" *ngIf="firstName !== null">Logout</a>
+        <a href="login" *ngIf="firstName !== null" (click)="logout()">Logout</a>
         <span class="spacer"></span>
       </mat-toolbar>
     </mat-sidenav-content>
