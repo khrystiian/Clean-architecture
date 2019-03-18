@@ -168,7 +168,10 @@ export class TripComponent implements OnInit, DoCheck  {
     var root = this.rootObject.routes[0].legs[0];
     root.passengersAge = this.passengersAgeList;
     root.seats = this.model.Seats;
-    this.tripService.calculatePrice(this.rootObject).subscribe(response => this.tripPrice = response) //check here
+    root.Username = localStorage.key(0);
+    this.tripService.calculatePrice(this.rootObject).subscribe(response => {
+      this.tripPrice = response;
+    }) //check here
 }
   finish(){
     console.log(this.model);
@@ -221,7 +224,7 @@ var rootObjectSteps: Step[] = [];
         steps: rootObjectSteps,
         passengersAge: null,
         routePreference: tripPreference,
-        seats: null,
+        seats: 1,
         Username: null
        }]
      }]

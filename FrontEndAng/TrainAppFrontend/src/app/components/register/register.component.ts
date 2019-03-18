@@ -17,12 +17,12 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    this.passengerService.addPassenger(this.model).subscribe(() => {
-      localStorage.setItem("blank", "blank");
-      localStorage.setItem(this.model.Email, this.model.FirstName);
-      location.reload();
-      this.router.navigateByUrl('');
-    }); 
+      this.passengerService.addPassenger(this.model).subscribe(() => {
+        localStorage.setItem("blank", "blank");
+        localStorage.setItem(this.model.Email, this.model.FirstName);
+        location.reload();
+        this.router.navigateByUrl('');
+      });
   }
   
 }

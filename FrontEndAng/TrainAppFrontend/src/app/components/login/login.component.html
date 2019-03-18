@@ -25,7 +25,7 @@
     <br />
     <br />
     <div class="form-group" style="text-align: center">
-      <button type="submit" [disabled]="loading" class="btn btn-primary" >Login</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!loginForm.form.valid">Login</button>
       <a href="register" class="btn btn-link" >Register</a>
     </div>
   </form>

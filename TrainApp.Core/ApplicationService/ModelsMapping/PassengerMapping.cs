@@ -9,15 +9,22 @@ namespace TrainApp.Core.ApplicationService.Mapping
     /// </summary>
     public class PassengerMapping
     {
-        public static PassengerModel MapPassenger(Passenger p) => new PassengerModel
+        public static PassengerModel MapPassenger(Passenger p)
         {
-            ID = p.CID,
-            FirstName = p.First_name,
-            LastName = p.Last_name,
-            Address = p.Address,
-            Email = p.Email,
-            Password = p.Password
-        };
+            if (p == null)
+            {
+                return new PassengerModel();
+            }
+            return new PassengerModel
+            {
+                ID = p.CID,
+                FirstName = p.First_name,
+                LastName = p.Last_name,
+                Address = p.Address,
+                Email = p.Email,
+                Password = p.Password
+            };
+        }
 
         public static Passenger MapPassengerModel(PassengerModel p) => new Passenger
         {

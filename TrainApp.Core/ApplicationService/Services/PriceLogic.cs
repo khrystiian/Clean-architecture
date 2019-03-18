@@ -47,6 +47,7 @@ namespace TrainApp.Core.ApplicationService.Services
                     {
                         var route = root.Steps[i];
                         double distance = 0;
+                        double routePrice = 0;
                         string departureHour = route.Transit.Departure_time.ToString("HH:mm");
 
                         if (route.Distance.Contains("km") && departureHour != "00:00")
@@ -55,14 +56,15 @@ namespace TrainApp.Core.ApplicationService.Services
                             distance = Double.Parse(route.Distance.Replace(" km", ""));
 
                             var priceByTime = PriceByDepartureTime(departureTime.Hour, distance); //the departure time contributes to the trip price.
-                            tripPrice = PriceByPassengersAge(root.PassengersAge, distance, priceByTime); //the passengers age contributes to the trip price. 
+                            routePrice = PriceByPassengersAge(root.PassengersAge, distance, priceByTime); //the passengers age contributes to the trip price. 
 
-                            tripPrice *= root.Seats;                            
-                            route.Price = tripPrice;  //set route price 
+                            routePrice *= root.Seats;          // TO DO - WAY TOO HIGH PRICE PER ROUTE .. CHECK                   
+                            route.Price = routePrice;  //set route price 
+                            tripPrice += routePrice;
                         }
                     }
                     root.Price = tripPrice;
-                   // _mTranslator.ModelsMapping(trip);
+                    _mTranslator.ModelsMapping(trip);
                 }
             }
             catch (Exception e)
