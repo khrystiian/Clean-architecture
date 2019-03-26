@@ -12,11 +12,12 @@ namespace TrainApp.Core.Entity
         public string Duration { get; set; }
         public string End_address { get; set; }
         public string Start_address { get; set; }
-        public List<StepModel> Steps { get; set; }
-        public string RoutePreference { get; set; }
-        public List<string> PassengersAge { get; set; }
-        public string Username { get; set; }
         public int Seats { get; set; }
+        public string Username { get; set; }
         public double Price { get; set; }
+        public string RoutePreference { get; set; }
+        public List<StepModel> Steps { get; set; }
+        public List<string> PassengersAge { get; set; }
+
     }
 }

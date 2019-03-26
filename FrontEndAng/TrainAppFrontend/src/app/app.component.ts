@@ -16,8 +16,9 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    localStorage.clear(); //clear localstorage =?
+    localStorage.clear(); //clear localstorage.
   }
+
 
 }
 

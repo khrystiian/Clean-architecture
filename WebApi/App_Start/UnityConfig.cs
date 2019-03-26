@@ -40,6 +40,8 @@ namespace UI
             container.RegisterType<IEntityRepository<PassengersAge>, EntityRepository<TrainAppEntities, PassengersAge>>();
             container.RegisterType<IRepository<PassengersAge>, PassengersAgesRepository>();
 
+            container.RegisterType<IEntityRepository<RouteSeat>, EntityRepository<TrainAppEntities, RouteSeat>>();
+            container.RegisterType<IRepository<RouteSeat>, RouteSeatsRepository>();
 
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);

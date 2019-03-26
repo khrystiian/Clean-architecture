@@ -16,6 +16,7 @@ namespace TrainApp.Core.ApplicationService.ModelsMapping
         private readonly IPassengerService _pServ;
         private readonly ITransitService _tService;
 
+
         private string id; //primary id for each object;
         private string tripId; //primary id for trip object
         private List<string> routesID = new List<string>(); //primary ids for route object list
@@ -29,12 +30,15 @@ namespace TrainApp.Core.ApplicationService.ModelsMapping
             tripId = GenerateGuid();
         }
 
-        public void ModelsMapping(RootObjectAPI root)
+        public string ModelsMapping(RootObjectAPI root)
         {
             LegModelMapping(root);
             RouteModelMapping(root);
+            RouteSeats(root);
             PassengersAgeMapping(root);
             TransitDetailMapping(root);
+
+            return tripId;
         }
 
 
@@ -65,12 +69,8 @@ namespace TrainApp.Core.ApplicationService.ModelsMapping
 
             foreach (var item in r)
             {
-                var routeSeatNr = 0;
                 var id = GenerateGuid();
                 routesID.Add(id);
-                var tripSeats = root.Routes[0].Legs[0].Seats;
-                routeSeatNr = RouteSeatsNumber(item.Travel_mode.ToString(), tripSeats);
-
                 routes.Add(new Route
                 {
                     ID = id,
@@ -78,11 +78,29 @@ namespace TrainApp.Core.ApplicationService.ModelsMapping
                     Distance = item.Distance,
                     Duration = item.Duration,
                     Price = (decimal)(item.Price),
-                    Travel_mode = item.Travel_mode,
-                    Seats = routeSeatNr
+                    Travel_mode = item.Travel_mode                    
                 });
             }
-             _rServ.AddRoute(routes);
+            _rServ.AddRoute(routes);
+        }
+
+        private void RouteSeats(RootObjectAPI root)
+        {
+            var r = root.Routes[0].Legs[0].Steps;
+            for (int i = 0; i < r.Count; i++)
+            {
+                var routeSeatNr = RouteSeatsNumber(r[i].Travel_mode.ToString(), root.Routes[0].Legs[0].Seats);
+                if (routeSeatNr > 0)
+                {
+                    var routeSeat = new RouteSeat
+                    {
+                        ID = GenerateGuid(),
+                        RouteID = routesID[i],
+                        SeatsNr = routeSeatNr
+                    };
+                    _rServ.AddRouteSeats(routeSeat);
+                }
+            }
         }
 
         private void PassengersAgeMapping(RootObjectAPI root)
@@ -124,6 +142,7 @@ namespace TrainApp.Core.ApplicationService.ModelsMapping
             };
             _tService.AddList(transitDetails);
         }
+
 
         /// <summary>
         /// Generate an unique id.Used for saving in db and run queries and commands against them.

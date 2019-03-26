@@ -6,5 +6,6 @@ namespace TrainApp.Core.ApplicationService.Interfaces
     public interface IRouteService
     {
         void AddRoute(List<Route> routes);
+        void AddRouteSeats(RouteSeat routeSeat);
     }
 }

@@ -47,7 +47,9 @@
     <Compile Include="PassengerAgeModel.cs" />
     <Compile Include="PassengerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RouteSeatModel.cs" />
     <Compile Include="StepModel.cs" />
+    <Compile Include="TripResponseModel.cs" />
     <Compile Include="TripStatus.cs" />
   </ItemGroup>
   <ItemGroup>

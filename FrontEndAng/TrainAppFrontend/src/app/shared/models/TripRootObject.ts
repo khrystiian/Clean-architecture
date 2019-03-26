@@ -32,7 +32,8 @@
     }
 
     export class RootObject {
-        routes: Route[];
+      routes: Route[];
+      status: boolean;
     }
 
 

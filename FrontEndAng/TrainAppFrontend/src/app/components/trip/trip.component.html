@@ -4,7 +4,7 @@
   <!--Form container-->
   <div class="col-md-12"  id="main-container">
 <div class="container">
-  <button type="button" class="btn btn-danger" (click)="toggle()" data-target="#tripForm">Search trips all around
+  <button type="button" class="btn btn-danger" (click)="toggle();" data-target="#tripForm">Search trips all around
     Europe</button>
   <br>
   <br>
@@ -168,14 +168,14 @@
       <h4>{{model.Seats}}</h4> 
       <h4>{{passAge}}</h4>      
       <br/>
-    <h3 style="font-weight:bolder; float: left !important;" *ngIf="tripPrice > 0">{{tripPrice}} Dkk</h3>
+      <h3 style="font-weight:bolder; float: left !important;" *ngIf="tripResponsePrice > 0">{{tripResponsePrice}} Dkk</h3>
   </div>
 </div>
-    <div class="btn-group" *ngIf="!tripPrice" style="width:100% !important">
+    <div class="btn-group" *ngIf="!tripResponsePrice" style="width:100% !important">
       <button type="button" class="btn btn-outline-info" (click)="calculateTripPrice()"
         style="margin-bottom:20px;">Calculate price</button>
     </div>
-    <div class="btn-group" *ngIf="tripPrice" style="width:100% !important">
+    <div class="btn-group" *ngIf="tripResponsePrice" style="width:100% !important">
       <button type="button" class="btn btn-outline-success" (click)="finish()"
         style="margin-bottom:20px;">Finish</button>
     </div>

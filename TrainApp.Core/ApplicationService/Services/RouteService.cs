@@ -9,11 +9,14 @@ namespace TrainApp.Core.ApplicationService.Services
     {
         private static readonly log4net.ILog log = LogHelper.GetLogger();
         private readonly IRepository<Route> _routeRepo;
+        private readonly IRepository<RouteSeat> _routeSeatRepo;
 
 
-        public RouteService(IRepository<Route> routeRepo)
+
+        public RouteService(IRepository<Route> routeRepo, IRepository<RouteSeat> routeSeatRepo)
         {
             _routeRepo = routeRepo ?? throw new ArgumentNullException(nameof(_routeRepo));
+            _routeSeatRepo = routeSeatRepo ?? throw new ArgumentNullException(nameof(_routeSeatRepo));
         }
 
         public void AddRoute(List<Route> routes)
@@ -35,6 +38,24 @@ namespace TrainApp.Core.ApplicationService.Services
             }
         }
 
-    
+        public void AddRouteSeats(RouteSeat routeSeat)
+        {
+            try
+            {
+                if (routeSeat == null)
+                {
+                    log.Debug("No routeSeats were added.");
+                }
+                else
+                {
+                    _routeSeatRepo.Add(routeSeat);
+                }
+            }
+            catch (Exception e)
+            {
+                log.Fatal(e); 
+            }
+        }
+
     }
 }

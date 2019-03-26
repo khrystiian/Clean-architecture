@@ -2,6 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Core.Objects.DataClasses;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -20,6 +24,7 @@ namespace Infrastructure.Repositories
         }
 
         public DbSet<T> Set { get; }
+        public DbSet<Trip> SetTrip{ get; set; }
 
         public EntityRepository(C entities = null)
         {
@@ -29,6 +34,7 @@ namespace Infrastructure.Repositories
                 this.entities = new C();
 
             Set = this.entities.Set<T>();
+            SetTrip = this.entities.Set<Trip>();
         }
 
         public virtual int Save()
@@ -38,11 +44,43 @@ namespace Infrastructure.Repositories
                 //Context.Database.Log = s => Console.WriteLine(s);
                 return entities.SaveChanges();
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e.Message + " STACKTRACE " + e.StackTrace + " innerexception " + e.InnerException);
                 throw;
             }
         }
+
+
+        public int SaveChanges(bool refreshOnConcurrencyException, RefreshMode refreshMode = RefreshMode.ClientWins)
+        {
+            try
+            {
+                return entities.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                foreach (DbEntityEntry entry in ex.Entries)
+                {
+                    if (refreshMode == RefreshMode.ClientWins)
+                        try
+                        {
+                            var a = entry.GetDatabaseValues();
+                            entry.OriginalValues.SetValues(a);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message + " STACKTRACE " + e.StackTrace + " innerexception " + e.InnerException);
+                            throw;
+                        }
+                    else
+                        entry.Reload();
+                }
+                return entities.SaveChanges();
+            }
+
+        }
+
         public virtual async Task<int> SaveAsync()
         {
             try
@@ -70,11 +108,30 @@ namespace Infrastructure.Repositories
 
         public virtual async Task<int> EditAsync(T t)
         {
-            Set.Attach(t);
-            var entry = Context.Entry(t);
-            entry.State = EntityState.Modified;
+            try
+            {
+                Set.Attach(t);
+                var entry = Context.Entry(t);
+                entry.State = EntityState.Modified;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message + " STACKTRACE " + e.StackTrace + " innerexception " + e.InnerException);
+                throw;
+            }
             return await SaveAsync();
         }
+
+        public virtual bool Edit(T t)
+        {
+            Set.Attach(t);
+            var entry = Context.Entry(t).State = EntityState.Modified;
+            int saved = Save();
+
+            return (saved != -1) ? true : false;
+        }
+        
+
 
         public virtual IEnumerable<T> ReadAll()
         {

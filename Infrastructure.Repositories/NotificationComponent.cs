@@ -1,12 +1,7 @@
 ﻿using Infrastructure.DataAccess;
-using Microsoft.AspNet.SignalR;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Infrastructure.Repositories
@@ -17,7 +12,8 @@ namespace Infrastructure.Repositories
         {
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlConString"].ConnectionString))
             {
-                SqlCommand cmd = new SqlCommand(@"SELECT [CID],[First_name],[Last_name], [Email], [Address], [Password] from [dbo].[Passengers]", con);
+                  SqlCommand cmd = new SqlCommand(@"SELECT [ID], [Start_address], [End_address], [Arrival_time], [Departure_time], [Price] from [dbo].[Trips]", con);
+                //SqlCommand cmd = new SqlCommand(@"SELECT [CID], [First_name], [Last_name], [Address], [Email], [Password] from [dbo].[Passengers]", con);
                 if (con.State != System.Data.ConnectionState.Open) { con.Open(); }
 
                // cmd.Notification = null;
@@ -29,7 +25,8 @@ namespace Infrastructure.Repositories
                 {
                     using (TrainAppEntities dc = new TrainAppEntities())
                     {
-                        var allObjects = dc.Passengers.ToList();
+                        var allObjects = dc.Trips.ToList().LastOrDefault();
+                        //var allObjects = dc.Passengers.Last();
                         var theList = new JsonResult { Data = allObjects, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                     }
                 }

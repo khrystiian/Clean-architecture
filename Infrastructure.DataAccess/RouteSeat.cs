@@ -15,18 +15,18 @@ namespace Infrastructure.DataAccess
 using System;
     using System.Collections.Generic;
     
-public partial class PassengersAge
+public partial class RouteSeat
 {
 
     public string ID { get; set; }
 
-    public string TripId { get; set; }
+    public string RouteID { get; set; }
 
-    public string Value { get; set; }
+    public Nullable<int> SeatsNr { get; set; }
 
 
 
-    public virtual Trip Trip { get; set; }
+    public virtual Route Route { get; set; }
 
 }
 

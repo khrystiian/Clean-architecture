@@ -21,9 +21,7 @@ namespace Infrastructure.Repositories
 
         public Passenger FindByEmail(string email) => base.FindFirst(p => p.Email == email);
 
-      
-
         public void AddList(List<Passenger> ts) => throw new NotImplementedException();
-        public void UpdateStatus(string status) => throw new NotImplementedException();
+        public bool UpdateStatus(string id, string status) => throw new NotImplementedException();
     }
 }

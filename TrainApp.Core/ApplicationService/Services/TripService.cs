@@ -11,7 +11,7 @@ namespace TrainApp.Core.ApplicationService.Services
 
         public TripService(IRepository<Trip> tripRepo)
         {
-            this._tripRepo = tripRepo ?? throw new ArgumentNullException(nameof(_tripRepo));
+            _tripRepo = tripRepo ?? throw new ArgumentNullException(nameof(_tripRepo));
         }
 
         public void AddTrip(Trip trip)

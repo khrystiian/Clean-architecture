@@ -19,13 +19,14 @@ import { TripService } from './shared/services/trip.service';
 import { LayoutModule } from '@angular/cdk/layout';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { Passenger } from './shared/models/Passenger';
+import { NotificationComponent } from './components/notification/notification.component';
 @NgModule({
   declarations: [
     AppComponent,
     TripComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,

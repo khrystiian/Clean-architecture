@@ -1,9 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using TrainApp.Core.ApplicationService.Interfaces;
 using TrainApp.Core.ApplicationService.Services;
 using TrainApp.Core.Entity;
 
@@ -20,20 +18,14 @@ namespace UI.Controllers
             this._rootService = rootService ?? throw new ArgumentNullException(nameof(_rootService));
         }
 
-        // GET: api/Trip/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         //GET:api/Trip/trip
-        //public Rootobject Get()
+        //public LegModel Get(string id)
         //{
-        //    return _tripService.GetRootObject();
+        //    return _rootService.GetTripById(id);
         //}
 
         // POST: api/Trip
-        public double Post([FromBody]RootObjectAPI tripRootObject)
+        public TripResponseModel Post([FromBody]RootObjectAPI tripRootObject)
         {
             var json = JsonConvert.SerializeObject(tripRootObject);
             if (tripRootObject == null)
@@ -44,14 +36,13 @@ namespace UI.Controllers
         }
 
         // PUT: api/Trip/5
-        public void Put(bool confirm)
+        [HttpPut]
+        public bool Put(string id, [FromBody]RootObjectAPI root)
         {
-            _rootService.ConfirmTrip(confirm);
+            return _rootService.ConfirmTrip(id, root.Status);
         }
 
         // DELETE: api/Trip/5
-        public void Delete(int id)
-        {
-        }
+        public void Delete(int id) { }
     }
 }

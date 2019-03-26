@@ -1,4 +1,5 @@
 ﻿using Infrastructure.DataAccess;
+using System;
 using System.Collections.Generic;
 using TrainApp.Core.ApplicationService;
 
@@ -17,12 +18,9 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public void UpdateStatus(string status)
-        {
-            // base.Update(status);
-        }
+        public bool UpdateStatus(string id, string status) => throw new NotImplementedException();
 
-        public void Add(Route t) => throw new System.NotImplementedException();
+        public void Add(Route t) { }
 
         public Route FindByEmail(string email) => throw new System.NotImplementedException();
 

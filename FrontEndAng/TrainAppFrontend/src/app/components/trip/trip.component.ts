@@ -2,9 +2,7 @@ import { OnInit, Component, DoCheck } from '@angular/core';
 import { TripForm } from 'src/app/shared/models/TripForm';
 import { TravelMode } from 'src/app/shared/models/TravelMode';
 import { TripService } from 'src/app/shared/services/trip.service';
-import { HttpClient } from '@angular/common/http';
 import { } from '@google/maps';
-import { PassengerService } from 'src/app/shared/services/passenger.service';
 import { FormControl } from '@angular/forms';
 import { RootObject, Step, TransitDetails } from 'src/app/shared/models/TripRootObject';
 
@@ -21,14 +19,16 @@ declare var google: any;
  */
 export class TripComponent implements OnInit, DoCheck  {
   rootObject: RootObject;
-  tripPrice: any;
-  models: any;
   model = new TripForm;
-  showForm: boolean;
+  tripResponsePrice: number;
   map: any;
-  passengersAgeList: string[];
+  models: any;
   passAge: string;
+  tripResponseID: string;
+  showForm: boolean;
   secondContainerFlag: boolean;
+  passengersAgeList: string[];
+  passengerAgeList: string[] = ['0-11 years old', '12-15 years old', '16-25 years old', 'Adult', '10 tickets'];
   passengersAge = new FormControl();
   travelPreferences: TravelMode[] = [
     { value: 'FEWER_TRANSFERS', viewValue: 'Fewer transfers' },
@@ -54,7 +54,6 @@ export class TripComponent implements OnInit, DoCheck  {
     { value: 4, viewValue: 4 },
     { value: 4, viewValue: 5 }
   ];
-  passengerAgeList: string[] = ['0-11 years old', '12-15 years old', '16-25 years old', 'Adult', '10 tickets'];
 
   constructor(private tripService: TripService) { }
 
@@ -99,6 +98,29 @@ export class TripComponent implements OnInit, DoCheck  {
       }
   }
 
+
+  calculateTripPrice() {
+    var root = this.rootObject.routes[0].legs[0];
+
+    root.passengersAge = this.passengersAgeList;
+    root.seats = this.model.Seats;
+    root.Username = localStorage.key(0);
+
+    this.tripService.calculatePrice(this.rootObject).subscribe(response => this.getDataObject(response));
+  }
+
+  getDataObject(data: any) {
+    this.tripResponsePrice = data.TripPrice;
+    this.tripResponseID = data.ID;
+  }
+
+  finish() {
+    console.log(this.tripResponsePrice + " -2- " + this.tripResponseID);
+
+    var root: RootObject = { routes: [], status: this.tripResponsePrice > 0 ? true : false };
+    this.tripService.confirmPayment(this.tripResponseID, root).subscribe(x => console.log(x)); 
+ }
+
   public initMap(model: TripForm): void {
     //Google Maps Center/Focus point
     var mapCanvas = document.getElementById("map");
@@ -134,7 +156,7 @@ export class TripComponent implements OnInit, DoCheck  {
   }
 
   calculateAndDisplayRoute(directionsService, directionsDisplay, tripModel: TripForm) {
-    if (tripModel !== null) { 
+    if (tripModel !== null) {
       directionsService.route({
         origin: tripModel.HomeAddress,
         destination: tripModel.DestinationAddress,
@@ -160,25 +182,9 @@ export class TripComponent implements OnInit, DoCheck  {
       directionsDisplay.setMap(this.map);
       directionsDisplay.setPanel(document.getElementById('right-panel'));
       document.getElementById('map').className = 'col-md-8';
-      document.getElementById('right-panel').className = 'col-md-4';      
+      document.getElementById('right-panel').className = 'col-md-4';
     }
   };
-
-  calculateTripPrice(){
-    var root = this.rootObject.routes[0].legs[0];
-    root.passengersAge = this.passengersAgeList;
-    root.seats = this.model.Seats;
-    root.Username = localStorage.key(0);
-    this.tripService.calculatePrice(this.rootObject).subscribe(response => {
-      this.tripPrice = response;
-    }) //check here
-}
-  finish(){
-    console.log(this.model);
-    console.log(this.tripPrice);
-    var confirm=true;
-    this.tripPrice > 0 ? this.tripService.confirmPayment(confirm) : false;
- }
 
  /**
   * Necessary to trim the google maps generated API object. 
@@ -225,9 +231,10 @@ var rootObjectSteps: Step[] = [];
         passengersAge: null,
         routePreference: tripPreference,
         seats: 1,
-        Username: null
+         Username: null
        }]
-     }]
+     }],
+     status: false
    };
    return this.rootObject;
  }

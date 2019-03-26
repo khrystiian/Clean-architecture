@@ -20,6 +20,6 @@ namespace Infrastructure.Repositories
         public void Add(TransitDetail t) => throw new NotImplementedException();
         public TransitDetail FindByEmail(string email) => throw new NotImplementedException();
         public IEnumerable<TransitDetail> GetAll() => throw new NotImplementedException();
-        public void UpdateStatus(string status) => throw new NotImplementedException();
+        public bool UpdateStatus(string id, string status) => throw new NotImplementedException();
     }
 }

@@ -33,8 +33,15 @@
           <Property Name="Distance" Type="nvarchar" MaxLength="50" />
           <Property Name="Duration" Type="nvarchar" MaxLength="50" />
           <Property Name="Travel_mode" Type="nvarchar" MaxLength="50" />
-          <Property Name="Price" Type="decimal" Precision="15" Scale="2" />
-          <Property Name="Seats" Type="int" />
+          <Property Name="Price" Type="money" />
+        </EntityType>
+        <EntityType Name="RouteSeats">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="RouteID" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SeatsNr" Type="int" />
         </EntityType>
         <EntityType Name="TransitDetails">
           <Key>
@@ -60,7 +67,7 @@
           <Property Name="Distance" Type="nvarchar" MaxLength="50" />
           <Property Name="Duration" Type="nvarchar" MaxLength="50" />
           <Property Name="Preference" Type="nvarchar" MaxLength="50" />
-          <Property Name="Price" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="Price" Type="money" />
           <Property Name="Status" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <Association Name="FK_PassengersAge_Trips">
@@ -84,6 +91,18 @@
             </Principal>
             <Dependent Role="Routes">
               <PropertyRef Name="TripID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RouteSeats_Routes">
+          <End Role="Routes" Type="Self.Routes" Multiplicity="1" />
+          <End Role="RouteSeats" Type="Self.RouteSeats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Routes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RouteSeats">
+              <PropertyRef Name="RouteID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -115,6 +134,7 @@
           <EntitySet Name="Passengers" EntityType="Self.Passengers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PassengersAge" EntityType="Self.PassengersAge" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Routes" EntityType="Self.Routes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RouteSeats" EntityType="Self.RouteSeats" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TransitDetails" EntityType="Self.TransitDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trips" EntityType="Self.Trips" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_PassengersAge_Trips" Association="Self.FK_PassengersAge_Trips">
@@ -124,6 +144,10 @@
           <AssociationSet Name="FK_Routes_Trips" Association="Self.FK_Routes_Trips">
             <End Role="Trips" EntitySet="Trips" />
             <End Role="Routes" EntitySet="Routes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RouteSeats_Routes" Association="Self.FK_RouteSeats_Routes">
+            <End Role="Routes" EntitySet="Routes" />
+            <End Role="RouteSeats" EntitySet="RouteSeats" />
           </AssociationSet>
           <AssociationSet Name="FK_TransitDetails_Routes" Association="Self.FK_TransitDetails_Routes">
             <End Role="Routes" EntitySet="Routes" />
@@ -142,6 +166,7 @@
           <EntitySet Name="Passengers" EntityType="TrainAppModel.Passenger" />
           <EntitySet Name="PassengersAges" EntityType="TrainAppModel.PassengersAge" />
           <EntitySet Name="Routes" EntityType="TrainAppModel.Route" />
+          <EntitySet Name="RouteSeats" EntityType="TrainAppModel.RouteSeat" />
           <EntitySet Name="TransitDetails" EntityType="TrainAppModel.TransitDetail" />
           <EntitySet Name="Trips" EntityType="TrainAppModel.Trip" />
           <AssociationSet Name="FK_Trips_Passengers" Association="TrainAppModel.FK_Trips_Passengers">
@@ -155,6 +180,10 @@
           <AssociationSet Name="FK_Routes_Trips" Association="TrainAppModel.FK_Routes_Trips">
             <End Role="Trip" EntitySet="Trips" />
             <End Role="Route" EntitySet="Routes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RouteSeats_Routes" Association="TrainAppModel.FK_RouteSeats_Routes">
+            <End Role="Route" EntitySet="Routes" />
+            <End Role="RouteSeat" EntitySet="RouteSeats" />
           </AssociationSet>
           <AssociationSet Name="FK_TransitDetails_Routes" Association="TrainAppModel.FK_TransitDetails_Routes">
             <End Role="Route" EntitySet="Routes" />
@@ -191,10 +220,19 @@
           <Property Name="Distance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Duration" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Travel_mode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Price" Type="Decimal" Precision="15" Scale="2" />
-          <Property Name="Seats" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="Trip" Relationship="TrainAppModel.FK_Routes_Trips" FromRole="Route" ToRole="Trip" />
+          <NavigationProperty Name="RouteSeats" Relationship="TrainAppModel.FK_RouteSeats_Routes" FromRole="Route" ToRole="RouteSeat" />
           <NavigationProperty Name="TransitDetails" Relationship="TrainAppModel.FK_TransitDetails_Routes" FromRole="Route" ToRole="TransitDetail" />
+        </EntityType>
+        <EntityType Name="RouteSeat">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RouteID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SeatsNr" Type="Int32" />
+          <NavigationProperty Name="Route" Relationship="TrainAppModel.FK_RouteSeats_Routes" FromRole="RouteSeat" ToRole="Route" />
         </EntityType>
         <EntityType Name="TransitDetail">
           <Key>
@@ -221,7 +259,7 @@
           <Property Name="Distance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Duration" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Preference" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Price" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Passenger" Relationship="TrainAppModel.FK_Trips_Passengers" FromRole="Trip" ToRole="Passenger" />
           <NavigationProperty Name="PassengersAges" Relationship="TrainAppModel.FK_PassengersAge_Trips" FromRole="Trip" ToRole="PassengersAge" />
@@ -263,6 +301,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RouteSeats_Routes">
+          <End Type="TrainAppModel.Route" Role="Route" Multiplicity="1" />
+          <End Type="TrainAppModel.RouteSeat" Role="RouteSeat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RouteSeat">
+              <PropertyRef Name="RouteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TransitDetails_Routes">
           <End Type="TrainAppModel.Route" Role="Route" Multiplicity="1" />
           <End Type="TrainAppModel.TransitDetail" Role="TransitDetail" Multiplicity="*" />
@@ -275,7 +325,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -305,12 +355,20 @@
           <EntitySetMapping Name="Routes">
             <EntityTypeMapping TypeName="TrainAppModel.Route">
               <MappingFragment StoreEntitySet="Routes">
-                <ScalarProperty Name="Seats" ColumnName="Seats" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Travel_mode" ColumnName="Travel_mode" />
                 <ScalarProperty Name="Duration" ColumnName="Duration" />
                 <ScalarProperty Name="Distance" ColumnName="Distance" />
                 <ScalarProperty Name="TripID" ColumnName="TripID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RouteSeats">
+            <EntityTypeMapping TypeName="TrainAppModel.RouteSeat">
+              <MappingFragment StoreEntitySet="RouteSeats">
+                <ScalarProperty Name="SeatsNr" ColumnName="SeatsNr" />
+                <ScalarProperty Name="RouteID" ColumnName="RouteID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

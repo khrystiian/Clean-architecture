@@ -8,6 +8,6 @@ namespace TrainApp.Core.ApplicationService
         void AddList(List<T> ts);
         IEnumerable<T> GetAll();
         T FindByEmail(string email);
-        void UpdateStatus(string status);
+        bool UpdateStatus(string id, string status);
     }
 }

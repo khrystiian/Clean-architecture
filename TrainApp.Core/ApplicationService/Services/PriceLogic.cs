@@ -12,13 +12,15 @@ namespace TrainApp.Core.ApplicationService.Services
         private static readonly log4net.ILog log = LogHelper.GetLogger();
         private readonly MiddlewareTranslator _mTranslator;
         private readonly IRepository<Route> _routeRepo;
+        private readonly IRepository<Trip> _tripRepo;
 
-
-        public PriceLogic(IRepository<Route> routeRepo, MiddlewareTranslator rootTranslator)
+        public PriceLogic(IRepository<Route> routeRepo, IRepository<Trip> tripRepo, MiddlewareTranslator rootTranslator)
         {
             _mTranslator = rootTranslator ?? throw new ArgumentNullException(nameof(_mTranslator));
             _routeRepo = routeRepo ?? throw new ArgumentNullException(nameof(_routeRepo));
+            _tripRepo = tripRepo ?? throw new ArgumentNullException(nameof(_tripRepo));
         }
+
 
         /// <summary>
         /// Calculate the trip price based on a number of parameters: nr of seats, passengers age, route distance, transit departure time.
@@ -31,47 +33,67 @@ namespace TrainApp.Core.ApplicationService.Services
         /// </summary>
         /// <param name="tripModel"></param>
         /// <returns></returns>
-        public double TripPrice(RootObjectAPI trip) //TO DO
+        public TripResponseModel TripPrice(RootObjectAPI trip) //TO DO
         {
-            var root = trip.Routes[0].Legs[0];
             double tripPrice = 0;
-            try
+            string tripId = "";
+
+            //Instead of calculating the price for every route check if there is a an existing route with a price set. 
+            if (tripPrice != 0)
             {
-                if (trip == null)
+                tripId = _mTranslator.ModelsMapping(trip);
+                return new TripResponseModel
                 {
-                    log.Debug("Error in trip price method.");
-                }
-                else
+                    ID = tripId,
+                    TripPrice = tripPrice
+                };
+            }
+            else
+            {
+                var root = trip.Routes[0].Legs[0];
+                try
                 {
-                    for (int i = 0; i < root.Steps.Count; i++)
+                    if (trip == null)
                     {
-                        var route = root.Steps[i];
-                        double distance = 0;
-                        double routePrice = 0;
-                        string departureHour = route.Transit.Departure_time.ToString("HH:mm");
-
-                        if (route.Distance.Contains("km") && departureHour != "00:00")
-                        {
-                            DateTime departureTime = DateTime.ParseExact(departureHour, "HH:mm", CultureInfo.InvariantCulture);
-                            distance = Double.Parse(route.Distance.Replace(" km", ""));
-
-                            var priceByTime = PriceByDepartureTime(departureTime.Hour, distance); //the departure time contributes to the trip price.
-                            routePrice = PriceByPassengersAge(root.PassengersAge, distance, priceByTime); //the passengers age contributes to the trip price. 
-
-                            routePrice *= root.Seats;          // TO DO - WAY TOO HIGH PRICE PER ROUTE .. CHECK                   
-                            route.Price = routePrice;  //set route price 
-                            tripPrice += routePrice;
-                        }
+                        log.Debug("Error in trip price method.");
                     }
-                    root.Price = tripPrice;
-                    _mTranslator.ModelsMapping(trip);
+                    else
+                    {
+                        for (int i = 0; i < root.Steps.Count; i++)
+                        {
+                            var route = root.Steps[i];
+                            double distance = 0;
+                            double routePrice = 0;
+                            string departureHour = route.Transit.Departure_time.ToString("HH:mm");
+
+                            if (route.Distance.Contains("km") && departureHour != "00:00")
+                            {
+                                DateTime departureTime = DateTime.ParseExact(departureHour, "HH:mm", CultureInfo.InvariantCulture);
+                                distance = Double.Parse(route.Distance.Replace(" km", ""));
+
+                                var priceByTime = PriceByDepartureTime(departureTime.Hour, distance); //the departure time contributes to the trip price.
+                                routePrice = PriceByPassengersAge(root.PassengersAge, distance, priceByTime); //the passengers age contributes to the trip price. 
+
+                                routePrice *= root.Seats;          //TOO HIGH PRICE PER ROUTE .. CHECK                   
+                                route.Price = routePrice;  //set route price 
+                                tripPrice += routePrice;
+                            }
+                        }
+                        root.Price = tripPrice;
+                        tripId = _mTranslator.ModelsMapping(trip);
+                        
+                    }
+                }
+                catch (Exception e)
+                {
+                    log.Fatal(e);
                 }
             }
-            catch (Exception e)
-            {
-                log.Fatal(e);
-            }
-            return tripPrice;
+
+            return new TripResponseModel {
+                ID = tripId,
+                TripPrice = tripPrice
+            };
         }
 
         /// <summary>
@@ -81,7 +103,8 @@ namespace TrainApp.Core.ApplicationService.Services
         /// <param name="distance">The distance of each route. Used to avoid having different prices when selecting multiple instances of the same age.(fx.2 x Adult)</param>
         /// <param name="currentPrice">The current price of the trip. Used for consistency reasons</param>
         /// <returns></returns>
-        private double PriceByPassengersAge(List<string> ages, double distance, double currentPrice) { 
+        private double PriceByPassengersAge(List<string> ages, double distance, double currentPrice)
+        {
             double totalPrice = 0;
             foreach (var item in ages)
             {
@@ -107,7 +130,7 @@ namespace TrainApp.Core.ApplicationService.Services
                 }
                 else if (item.Contains("10 tickets"))
                 {
-                        totalPrice += (currentPrice + (distance / 3 + (distance / 2)))*8;
+                    totalPrice += (currentPrice + (distance / 3 + (distance / 2))) * 8;
                 }
             }
             return Math.Round(totalPrice, 2);
@@ -133,12 +156,7 @@ namespace TrainApp.Core.ApplicationService.Services
             return 0;
         }
 
-        public void ConfirmTrip(bool confirm)
-        {
-            var status = "";
-            status = (confirm) ? "Confirmed" : "Searched"; //set trip status confirmed if payment accepted, or searched if canceled;
-            _routeRepo.UpdateStatus(status);
-        }
-
+        //set trip status confirmed if payment accepted, or searched if canceled
+        public bool ConfirmTrip(string tripId, bool confirmStatus) => _tripRepo.UpdateStatus(tripId, (confirmStatus) ? "Confirmed" : "Searched");
     }
 }

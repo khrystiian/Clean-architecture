@@ -26,10 +26,10 @@ export class TripService {
   
   getCalendar(): Observable<any[]> { return this.http.get<any[]>('http://www.mocky.io/v2/586c2fb1110000f51c2e0ea7');}
  
-  calculatePrice(trip: RootObject): Observable<RootObject>{ return this.http.post<RootObject>(this.url+"trip", trip, httpOptions).pipe(catchError(this.handleError('addTrip', trip))) }
+  calculatePrice(trip: RootObject): Observable<any> { return this.http.post<RootObject>(this.url + "trip", JSON.stringify(trip), httpOptions).pipe(catchError(this.handleError('addTrip', trip))) }
 
-  confirmPayment(confirm : boolean) {
-    this.http.put<boolean>(this.url+"trip?confirm=", confirm, httpOptions).pipe(catchError(this.handleError('confirmPayment', confirm)))
-  }
+  confirmPayment(tripId: string, trip: RootObject): Observable<any> {
+    return this.http.put<any>(this.url + "trip/" + tripId, trip, httpOptions).pipe(catchError(this.handleError('confirmPayment', trip)));
+  } 
 
 }

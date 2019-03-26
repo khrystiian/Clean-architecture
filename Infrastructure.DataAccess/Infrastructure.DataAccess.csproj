@@ -60,6 +60,9 @@
     <Compile Include="Route.cs">
       <DependentUpon>TrainAppModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="RouteSeat.cs">
+      <DependentUpon>TrainAppModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="TrainAppModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

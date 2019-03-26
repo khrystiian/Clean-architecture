@@ -4,6 +4,7 @@ namespace TrainApp.Core.Entity
 {
     public class RootObjectAPI{
         public List<RouteModel> Routes { get; set; }
+        public bool Status { get; set; }
     }
     
     public class RouteModel {
