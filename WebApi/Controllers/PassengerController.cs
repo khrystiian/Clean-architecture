@@ -30,7 +30,7 @@ namespace UI.Controllers
         [HttpPost]
         // POST: api/Passenger
         public void Post([FromBody]PassengerModel passenger)
-        {          
+        {
             _passengerService.AddPassenger(passenger);           
             if (passenger == null)
                 throw new HttpResponseException(System.Net.HttpStatusCode.NoContent);

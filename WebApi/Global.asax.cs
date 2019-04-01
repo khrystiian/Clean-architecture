@@ -11,7 +11,6 @@ namespace UI
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
-        string con = ConfigurationManager.ConnectionStrings["sqlConString"].ConnectionString;
 
         protected void Application_Start()
         {
@@ -22,17 +21,7 @@ namespace UI
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            SqlDependency.Start(con); //start the dependency
         }
 
-        protected void Session_Start(object sender, EventArgs e) //because of the session
-        {
-            NotificationComponent NC = new NotificationComponent();
-            NC.RegisterNotification();
-        }
-        protected void Application_End()
-        {
-            SqlDependency.Stop(con); //stop the dependency
-        }
     }
 }

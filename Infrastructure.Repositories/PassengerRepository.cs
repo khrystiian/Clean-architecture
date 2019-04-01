@@ -1,5 +1,4 @@
 ﻿using Infrastructure.DataAccess;
-using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
