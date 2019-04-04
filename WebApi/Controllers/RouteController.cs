@@ -7,14 +7,14 @@ using TrainApp.Core.Entity;
 
 namespace UI.Controllers
 {
-    public class RouteController : ApiController
-    {
-        private readonly IRouteService _routeService;
+    //public class RouteController : ApiController
+    //{
+    //    private readonly IRouteService _routeService;
 
-        public RouteController(IRouteService routeService)
-        {
-            this._routeService = routeService ?? throw new ArgumentNullException(nameof(_routeService));
-        }
+    //    public RouteController(IRouteService routeService)
+    //    {
+    //        this._routeService = routeService ?? throw new ArgumentNullException(nameof(_routeService));
+    //    }
 
         // GET: api/Route
         //[HttpGet]
@@ -68,5 +68,5 @@ namespace UI.Controllers
         //    }
         //    _routeService.RemoveRoute(route);
         //}
-    }
+    //}
 }

@@ -18,6 +18,5 @@ namespace TrainApp.Core.Entity
         public string RoutePreference { get; set; }
         public List<StepModel> Steps { get; set; }
         public List<string> PassengersAge { get; set; }
-
     }
 }

@@ -7,15 +7,13 @@ using TrainApp.Core.Entity;
 
 namespace UI.Controllers
 {
-    // Allow CORS for all origins. 
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class TripController : ApiController
     {
         private readonly PriceLogic _rootService;
 
         public TripController(PriceLogic rootService)
         {
-            this._rootService = rootService ?? throw new ArgumentNullException(nameof(_rootService));
+            _rootService = rootService ?? throw new ArgumentNullException(nameof(_rootService));
         }
 
         //GET:api/Trip/trip
@@ -24,14 +22,15 @@ namespace UI.Controllers
         //    return _rootService.GetTripById(id);
         //}
 
+        [HttpPost]
         // POST: api/Trip
         public TripResponseModel Post([FromBody]RootObjectAPI tripRootObject)
         {
-            var json = JsonConvert.SerializeObject(tripRootObject);
             if (tripRootObject == null)
             {
                 throw new HttpResponseException(System.Net.HttpStatusCode.NoContent);
             }
+
             return _rootService.TripPrice(tripRootObject);
         }
 

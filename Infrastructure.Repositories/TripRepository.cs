@@ -1,6 +1,7 @@
 ﻿using Infrastructure.DataAccess;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TrainApp.Core.ApplicationService;
 
 namespace Infrastructure.Repositories
@@ -23,5 +24,10 @@ namespace Infrastructure.Repositories
         public void AddList(List<Trip> ts) => throw new NotImplementedException();
         public Trip FindByEmail(string email) => throw new NotImplementedException();
         public IEnumerable<Trip> GetAll() => throw new NotImplementedException();
+
+        //public Trip RetrieveSignalRTrip()
+        //{
+        //    return base.ReadAll().ToList().LastOrDefault();
+        //}
     }
 }

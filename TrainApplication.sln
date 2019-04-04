@@ -35,7 +35,10 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "FrontEndAng", "FrontEndAng\
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "62582"
+		SlnRelativePath = "FrontEndAng\"
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHub", "TestHub.cs\TestHub.csproj", "{2C8E8C4A-39B8-426F-A09C-5BAED872524F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +70,10 @@ Global
 		{9DAD0BEC-4C87-4EC6-8B42-70A11E6F7861}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DAD0BEC-4C87-4EC6-8B42-70A11E6F7861}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{9DAD0BEC-4C87-4EC6-8B42-70A11E6F7861}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{2C8E8C4A-39B8-426F-A09C-5BAED872524F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C8E8C4A-39B8-426F-A09C-5BAED872524F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C8E8C4A-39B8-426F-A09C-5BAED872524F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C8E8C4A-39B8-426F-A09C-5BAED872524F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +83,7 @@ Global
 		{251F4BBA-8963-4536-AC53-4A4004C865F7} = {380CB39C-007B-459A-9D98-3933C7C2B8B4}
 		{C89FB394-6513-461D-B33C-67D293BA098A} = {C5FEB6E1-CF94-4086-84A4-4DC7BAB546B1}
 		{CC3548D9-13F5-47D0-B84E-09BB085220BA} = {C5FEB6E1-CF94-4086-84A4-4DC7BAB546B1}
+		{2C8E8C4A-39B8-426F-A09C-5BAED872524F} = {380CB39C-007B-459A-9D98-3933C7C2B8B4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B3BD44F6-A85E-4A9C-A94D-B65BBF040A2C}

@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using TrainApp.Core.ApplicationService;
 using TrainApp.Core.Entity;
 
 
 namespace UI.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class PassengerController : ApiController
     {
         private readonly IPassengerService _passengerService;

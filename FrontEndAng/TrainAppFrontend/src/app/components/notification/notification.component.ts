@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 
 @Component({
   selector: 'app-notification',
@@ -8,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 export class NotificationComponent implements OnInit {
   notify: string = '1';
 
-  constructor() { }
+  constructor(private nService: NotificationService) { }
 
   ngOnInit() {
+    this.nService.sendMessageToServer("text from component ");
+
+    this.nService.notification.subscribe(data => {
+      console.log(data);
+    });
+
+  }
+
+
+  ngOnDestroy() {
+    this.nService.notification.unsubscribe();
   }
 
   dropdown() {

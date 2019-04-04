@@ -4,7 +4,7 @@ const PROXY_CONFIG = [      {
           "/ohmioapi"
       ],
 
-      target: "http://localhost:54918",        
+      target: "http://localhost:56287",        
       changeOrigin: true,
       logLevel: "debug"
 
