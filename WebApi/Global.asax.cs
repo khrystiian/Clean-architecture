@@ -28,7 +28,7 @@ namespace UI
 
         protected void Session_Start(object sender, EventArgs e) //because of the session
         {
-            NotificationRepository NC = new NotificationRepository();
+            NotificationComponent NC = new NotificationComponent();
             NC.RegisterNotification();
         }
 

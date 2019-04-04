@@ -9,7 +9,8 @@ declare var $: any;
 export class NotificationService {
   public connection: any;
   public hub: any;
-  public notification = new Subject<string>(); //here is stored the notification object
+  public userMessage = new Subject<string>(); //here is stored the CLIENT - HUB - CLIENT object
+  public notification = new Subject<any>(); //here is stored the notification object
 
 
   constructor() {   
@@ -34,20 +35,26 @@ export class NotificationService {
     this.connection.start({ jsonp: true })
       .done(() => {
         this.hub = this.connection.createHubProxy("notify");
-        console.log('Connection with id ' + this.connection.id + 'started.' + '\n' +
-          'Transport - ' + this.connection.transport.name);
+        console.log("Connection open !");
 
-        //send messages to the hub.
+        //send messages to the hub. Client - Hub - Client
         this.hub.invoke('setMessage', msg);
-
 
       })
       .fail(err => console.error('Error while starting connection: ' + err));   
   }
 
+  //Get hub messages
   public receiveMessageFromServer() {
     this.hub.on('setMessage', (message) => {
-      this.notification.next(message);
+      this.userMessage.next(message);
+    })
+  }
+
+  //Get SQL Server notifications
+  public tripNotification() {
+    this.hub.on('tripNotification', (notification) => {
+      this.notification.next(notification);
     })
   }
 

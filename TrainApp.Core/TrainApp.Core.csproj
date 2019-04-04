@@ -71,6 +71,7 @@
     <Compile Include="ApplicationService\Interfaces\ITransitService.cs" />
     <Compile Include="ApplicationService\Interfaces\ITripService.cs" />
     <Compile Include="ApplicationService\LogHelper.cs" />
+    <Compile Include="ApplicationService\ModelsMapping\TripMapping.cs" />
     <Compile Include="ApplicationService\RabbitMq\RabbitMqService.cs" />
     <Compile Include="ApplicationService\Services\MiddlewareTranslator.cs" />
     <Compile Include="ApplicationService\Services\RouteService.cs" />

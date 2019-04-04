@@ -94,7 +94,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntityRepository.cs" />
-    <Compile Include="NotificationRepository.cs" />
     <Compile Include="PassengerRepository.cs" />
     <Compile Include="PassengersAgesRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

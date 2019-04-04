@@ -1,26 +1,26 @@
 ﻿using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using TrainApp.Core.Entity;
 
 namespace UI
 {
     [HubName("notify")]
     public class NotificationHub : Hub
     {
-        public void Hello()
-        {
-            Clients.All.hello();
-        }
 
+
+        //Client - Hub - Client
         public void SetMessage(string message)
         {
-            Clients.Caller.setMessage("some message " + message);
+            Clients.Caller.setMessage(message + " is received.");
         }
 
-        [HubMethodName("sendMessages")]
-        public static void SendMessages()
+
+
+        //SQL notification
+        public void TripNotification(LegModel trip)
         {
-            IHubContext context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-            context.Clients.All.updateMessages();
+            Clients.Caller.tripNotification(trip);
         }
 
     }
