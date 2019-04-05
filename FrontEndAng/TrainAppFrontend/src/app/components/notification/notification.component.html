@@ -1,8 +1,11 @@
 <span class="dropdown">
-  <a href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="dropdown()"><i class="fa fa-bell" style="color:red">{{notify}}</i></a>
-  <span class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#"> Start address: {{tripForm.Start_address}}</a>
-    <!--<a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>-->
+  <a href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  (click)="dropdown()"><i class="fa fa-bell" style="color: red">{{notify}}</i></a>
+  <span class="dropdown-menu" aria-labelledby="dropdownMenuButton" *ngIf="show">
+    <a class="dropdown-item" href="#" id="item" (click)="openItem()" > Start address: {{tripForm.Start_address}}</a>
+    <a class="dropdown-item" href="#" id="item" (click)="openItem()"> End address: {{tripForm.End_address}}</a>
+    <a class="dropdown-item" href="#" id="item" (click)="openItem()"> Departure time: {{tripForm.Departure_time}}</a>
+    <a class="dropdown-item" href="#" id="item" (click)="openItem()"> Arrival time: {{tripForm.Arrival_time}}</a>
+    <a class="dropdown-item" href="#" id="item" (click)="openItem()"> Distance: {{tripForm.Distance}}</a>
+    <a class="dropdown-item" href="#" id="item" (click)="openItem()"> Duration: {{tripForm.Duration}}</a>
   </span>
 </span>

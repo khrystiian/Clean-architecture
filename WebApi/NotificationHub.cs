@@ -9,10 +9,10 @@ namespace UI
     {
 
 
-        //Client - Hub - Client
+        //Client - Hub - Client - disabled in notification.component.ts
         public void SetMessage(string message)
         {
-            Clients.Caller.setMessage(message + " is received.");
+            Clients.Caller.setMessage(message + "...");
         }
 
 

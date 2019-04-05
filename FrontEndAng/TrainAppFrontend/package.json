@@ -18,7 +18,7 @@
   "dependencies": {
     "@agm/core": "^1.0.0-beta.5",
     "@agm/snazzy-info-window": "^1.0.0-beta.5",
-    "@angular/animations": "^7.2.3",
+    "@angular/animations": "^7.2.12",
     "@angular/cdk": "^7.3.0",
     "@angular/common": "~7.2.0",
     "@angular/compiler": "~7.2.0",
@@ -42,6 +42,7 @@
     "md-icons": "^1.0.0",
     "ng-pick-datetime": "^7.0.0",
     "ngx-mat-select-search": "^1.5.2",
+    "ngx-toastr": "^10.0.2",
     "rxjs": "~6.3.3",
     "rxjs-operators": "^1.0.7",
     "scriptjs": "^2.5.9",

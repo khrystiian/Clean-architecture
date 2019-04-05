@@ -50,3 +50,12 @@ h3{
 #confirmForm h4{
   text-align: left;
 }
+
+.button {
+  /*padding: 5px 40px;*/
+  margin: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+}

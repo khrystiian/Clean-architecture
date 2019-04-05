@@ -4,7 +4,8 @@ import { TravelMode } from 'src/app/shared/models/TravelMode';
 import { TripService } from 'src/app/shared/services/trip.service';
 import { } from '@google/maps';
 import { FormControl } from '@angular/forms';
-import { RootObject, Step, TransitDetails } from 'src/app/shared/models/TripRootObject';
+import { RootObject, Step, TransitDetails, Leg } from 'src/app/shared/models/TripRootObject';
+import { ToastrService } from 'ngx-toastr';
 
 declare var google: any;
 
@@ -14,7 +15,7 @@ declare var google: any;
   styleUrls: ['./trip.component.css']
 })
 /**
- * No authentication
+ * No authentication -  username saved in the localstorage.
  * add switch for when toggling between TRANSIT and others- to make receipt dissapear.
  */
 export class TripComponent implements OnInit, DoCheck  {
@@ -28,7 +29,7 @@ export class TripComponent implements OnInit, DoCheck  {
   showForm: boolean;
   secondContainerFlag: boolean;
   passengersAgeList: string[];
-  passengerAgeList: string[] = ['0-11 years old', '12-15 years old', '16-25 years old', 'Adult', '10 tickets'];
+  passengerAgeList: string[] = ['0-11 years old', '12-15 years old', '16-25 years old', 'Adult'];
   passengersAge = new FormControl();
   travelPreferences: TravelMode[] = [
     { value: 'FEWER_TRANSFERS', viewValue: 'Fewer transfers' },
@@ -55,13 +56,12 @@ export class TripComponent implements OnInit, DoCheck  {
     { value: 4, viewValue: 5 }
   ];
 
-  constructor(private tripService: TripService) { }
+  constructor(private tripService: TripService, private toastr: ToastrService) { }
 
 
   ngOnInit() { 
     document.getElementById('continueToOrder').style.display = 'none';
     this.initMap(null);
-    
   }
 
   ngDoCheck() { 
@@ -81,9 +81,20 @@ export class TripComponent implements OnInit, DoCheck  {
       this.model.ArrivalTime = this.model.Time;
       this.model.DepartureTime = null;
     }  
-    (this.model.TravelVia === 'TRANSIT') ? document.getElementById('continueToOrder').style.display = 'block' : document.getElementById('continueToOrder').style.display = 'none';
+    if (this.model.TravelVia === 'TRANSIT') {
+      document.getElementById('continueToOrder').style.display = 'block'
+    } else {
+      this.switchToMainView();
+    }
  
     this.initMap(this.model);
+  }
+
+  switchToMainView() {
+    document.getElementById("main-container").className = 'col-md-12';
+    document.getElementById('map').className = 'col-md-12';
+    document.getElementById('continueToOrder').style.display = 'none'
+    this.secondContainerFlag = false;
   }
 
   continue() {
@@ -99,26 +110,29 @@ export class TripComponent implements OnInit, DoCheck  {
   }
 
 
-  calculateTripPrice() {
+  calculateTripPrice() { //FIX PERFORMANCE
     var root = this.rootObject.routes[0].legs[0];
-
     root.passengersAge = this.passengersAgeList;
     root.seats = this.model.Seats;
     root.Username = localStorage.key(0);
 
     this.tripService.calculatePrice(this.rootObject).subscribe(response => this.getDataObject(response));
+    this.successmsg();
   }
 
   getDataObject(data: any) {
-    this.tripResponsePrice = data.TripPrice;
+    this.tripResponsePrice = data.TripPrice.toFixed(2);
     this.tripResponseID = data.ID;
   }
 
   finish() {
-    console.log(this.tripResponsePrice + " -2- " + this.tripResponseID);
-
+    this.switchToMainView();
+    document.getElementById('right-panel').style.display = 'none';
     var root: RootObject = { routes: [], status: this.tripResponsePrice > 0 ? true : false };
-    this.tripService.confirmPayment(this.tripResponseID, root).subscribe(x => console.log(x)); 
+    this.tripService.confirmPayment(this.tripResponseID, root).subscribe(x => {
+      //Optional features
+    });
+    this.model = new TripForm;
  }
 
   public initMap(model: TripForm): void {
@@ -237,7 +251,13 @@ var rootObjectSteps: Step[] = [];
      status: false
    };
    return this.rootObject;
- }
+  }
+
+
+  //Toastr notification pop up
+  successmsg() {
+    this.toastr.success("Trip create succesfully !", 'Success')
+  }
 }
 
 /**

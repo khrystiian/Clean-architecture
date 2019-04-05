@@ -6,7 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatInputModule, MatSelectModule, MatCheckboxModule, MatSidenavModule, MatButtonModule, MatIconModule, MatToolbarModule, MatListModule, MatDialogModule} from '@angular/material';
 import {MatRadioModule} from '@angular/material/radio';
 import { AgmCoreModule } from '@agm/core';
-import { AgmDirectionModule } from 'agm-direction' 
+import { AgmDirectionModule } from 'agm-direction'
+import { ToastrModule } from 'ngx-toastr';  
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -46,12 +47,17 @@ import { NotificationComponent } from './components/notification/notification.co
     MatSidenavModule,
     MatCheckboxModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBymUNgedD8zJ3CRo6ZlrKk99WFBWWi-94'  //AIzaSyCq7O84-3Q3EfCSwVSM0HYbGpkceQWCXIU
+      apiKey: 'AIzaSyBymUNgedD8zJ3CRo6ZlrKk99WFBWWi-94' //Google maps API Key
     }),
     AgmDirectionModule,
     LayoutModule,
     MatToolbarModule,
-    MatListModule
+    MatListModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      closeButton: false,
+      positionClass: "toast-top-right"
+    })  
   ],
   exports:[
     MatSidenavModule,

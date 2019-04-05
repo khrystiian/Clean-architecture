@@ -53,12 +53,6 @@ namespace TrainApp.Core.ApplicationService.Services
                 var root = trip.Routes[0].Legs[0];
                 try
                 {
-                    if (trip == null)
-                    {
-                        log.Debug("Error in trip price method.");
-                    }
-                    else
-                    {
                         for (int i = 0; i < root.Steps.Count; i++)
                         {
                             var route = root.Steps[i];
@@ -74,15 +68,13 @@ namespace TrainApp.Core.ApplicationService.Services
                                 var priceByTime = PriceByDepartureTime(departureTime.Hour, distance); //the departure time contributes to the trip price.
                                 routePrice = PriceByPassengersAge(root.PassengersAge, distance, priceByTime); //the passengers age contributes to the trip price. 
 
-                                routePrice *= root.Seats;          //TOO HIGH PRICE PER ROUTE .. CHECK                   
+                                routePrice *= root.Seats;                    
                                 route.Price = routePrice;  //set route price 
                                 tripPrice += routePrice;
                             }
                         }
                         root.Price = tripPrice;
                         tripId = _mTranslator.ModelsMapping(trip);
-                        
-                    }
                 }
                 catch (Exception e)
                 {
