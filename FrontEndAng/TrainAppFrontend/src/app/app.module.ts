@@ -47,7 +47,7 @@ import { NotificationComponent } from './components/notification/notification.co
     MatSidenavModule,
     MatCheckboxModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBymUNgedD8zJ3CRo6ZlrKk99WFBWWi-94' //Google maps API Key
+      //Google maps API Key
     }),
     AgmDirectionModule,
     LayoutModule,
