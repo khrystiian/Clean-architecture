@@ -26,12 +26,15 @@ namespace UI.Controllers
         // POST: api/Trip
         public TripResponseModel Post([FromBody]RootObjectAPI tripRootObject)
         {
-            if (tripRootObject == null)
+            if (tripRootObject != null)
+            {
+                return _rootService.TripPrice(tripRootObject);
+            }
+            else
             {
                 throw new HttpResponseException(System.Net.HttpStatusCode.NoContent);
             }
 
-            return _rootService.TripPrice(tripRootObject);
         }
 
         // PUT: api/Trip/5

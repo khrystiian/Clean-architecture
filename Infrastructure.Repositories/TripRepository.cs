@@ -16,7 +16,10 @@ namespace Infrastructure.Repositories
         public bool UpdateStatus(string id, string status)
         {
             Trip trip = base.FindFirst(x => x.ID == id);
-            trip.Status = status;
+            if (trip != null)
+            {
+                trip.Status = status;
+            }
 
             return base.Edit(trip);
         }
@@ -24,10 +27,5 @@ namespace Infrastructure.Repositories
         public void AddList(List<Trip> ts) => throw new NotImplementedException();
         public Trip FindByEmail(string email) => throw new NotImplementedException();
         public IEnumerable<Trip> GetAll() => throw new NotImplementedException();
-
-        //public Trip RetrieveSignalRTrip()
-        //{
-        //    return base.ReadAll().ToList().LastOrDefault();
-        //}
     }
 }

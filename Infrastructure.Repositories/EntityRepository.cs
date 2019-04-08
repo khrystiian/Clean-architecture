@@ -125,7 +125,7 @@ namespace Infrastructure.Repositories
         public virtual bool Edit(T t)
         {
             Set.Attach(t);
-            var entry = Context.Entry(t).State = EntityState.Modified;
+            Context.Entry(t).State = EntityState.Modified;
             int saved = Save();
 
             return (saved != -1) ? true : false;

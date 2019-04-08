@@ -28,11 +28,10 @@ export class LoginComponent implements OnInit {
     this.passengerService.postData(this.form.value)
       .subscribe(res => {
         if (res.status === 200){
-          this.passengerService.login(this.form.value.username, res.body.access_token).subscribe(response => {
+          this.passengerService.login(this.form.value.username, res.body.access_token).subscribe((response) => {
   
-            localStorage.setItem("blank", "blank"); //necessary for select element at index 1
-            localStorage.setItem(response.Email, response.FirstName);
-            location.reload();
+           // localStorage.setItem("blank", "blank"); 
+            localStorage.setItem(response.FirstName, response.Email);
 
           })
           this.router.navigateByUrl('');

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Passenger } from '../models/Passenger';
 import { HandleError, HttpErrorHandler } from './http-error-handler.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 
@@ -18,6 +18,7 @@ const httpOptions = {
 export class PassengerService {
   url = "http://localhost:56287/";  // URL to web api
   private handleError: HandleError;
+  public navBarUsername = new Subject<any>(); //here is stored the notification object
 
   constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) { 
     this.handleError = httpErrorHandler.createHandleError('PassengerService'); 
@@ -44,9 +45,10 @@ export class PassengerService {
   }
   
   login(email, token): Observable<Passenger>{
+    this.navBarUsername.next(email);
 
     //New httpHeaders necessary for authentication
-  const httpOptions2 = {
+    const httpOptions2 = {     
     headers: new HttpHeaders(
       {
         'Authorization': "bearer " + token

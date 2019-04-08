@@ -15,7 +15,7 @@
   <app-notification></app-notification>
   <span class="spacer2"></span>
   <span class="spacer2"></span>
-  <a href="login" *ngIf="firstName === null">Login/Register</a>
+  <a href="login" *ngIf="firstName === null" (click)="login()">Login/Register</a>
   <a href="login" *ngIf="firstName !== null" (click)="logout()">Logout</a>
   <span class="spacer"></span>
 </mat-toolbar>

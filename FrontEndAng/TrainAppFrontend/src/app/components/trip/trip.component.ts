@@ -110,11 +110,11 @@ export class TripComponent implements OnInit, DoCheck  {
   }
 
 
-  calculateTripPrice() { //FIX PERFORMANCE
+  calculateTripPrice() { 
     var root = this.rootObject.routes[0].legs[0];
     root.passengersAge = this.passengersAgeList;
     root.seats = this.model.Seats;
-    root.Username = localStorage.key(0);
+    root.Username = localStorage.getItem(localStorage.key(0));
 
     this.tripService.calculatePrice(this.rootObject).subscribe(response => this.getDataObject(response));
     this.successmsg();
@@ -149,7 +149,7 @@ export class TripComponent implements OnInit, DoCheck  {
     var marker = new google.maps.Marker({
       position: new google.maps.LatLng(57.0488, 9.9217),
       map: this.map,
-      title: 'Aalborg' //hometown
+      title: 'Aalborg' //initial location
     });
 
     //Google Maps InfoWindow
