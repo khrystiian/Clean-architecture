@@ -11,29 +11,43 @@ namespace TrainApp.Core.ApplicationService.Mapping
     {
         public static PassengerModel MapPassenger(Passenger p)
         {
-            if (p == null)
+            try
+            {
+                return new PassengerModel
+                {
+                    ID = p.CID,
+                    FirstName = p.First_name,
+                    LastName = p.Last_name,
+                    Address = p.Address,
+                    Email = p.Email,
+                    Password = p.Password
+                };
+            }
+            catch (System.Exception)
             {
                 return new PassengerModel();
             }
-            return new PassengerModel
-            {
-                ID = p.CID,
-                FirstName = p.First_name,
-                LastName = p.Last_name,
-                Address = p.Address,
-                Email = p.Email,
-                Password = p.Password
-            };
+        
         }
 
-        public static Passenger MapPassengerModel(PassengerModel p) => new Passenger
+        public static Passenger MapPassengerModel(PassengerModel p)
         {
-            CID = p.ID,
-            First_name = p.FirstName,
-            Last_name = p.LastName,
-            Address = p.Address,
-            Email = p.Email,
-            Password = p.Password
-        };
+            try
+            {
+                return new Passenger
+                {
+                    CID = p.ID,
+                    First_name = p.FirstName,
+                    Last_name = p.LastName,
+                    Address = p.Address,
+                    Email = p.Email,
+                    Password = p.Password
+                };
+            }
+            catch (System.Exception)
+            {
+                return new Passenger();
+            }
+        }
     }
 }

@@ -1,10 +1,6 @@
 ﻿using Infrastructure.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web.Mvc;
 using TrainApp.Core.ApplicationService;
 
 namespace Infrastructure.Repositories

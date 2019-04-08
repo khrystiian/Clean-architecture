@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Passenger } from '../models/Passenger';
 import { HandleError, HttpErrorHandler } from './http-error-handler.service';
 import { Observable } from 'rxjs';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 
 const httpOptions = {
@@ -16,22 +16,42 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class PassengerService {
-  url = "http://localhost:56287/api/";  // URL to web api
+  url = "http://localhost:56287/";  // URL to web api
   private handleError: HandleError;
 
   constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) { 
     this.handleError = httpErrorHandler.createHandleError('PassengerService'); 
   }
 
+  postData(data): any {
+    const body = new HttpParams()
+      .set('grant_type', data.grant_type)
+      .set('username', data.username)
+      .set('password', data.password)
+    return this.http.post(this.url+'token', body.toString(), {
+      observe: 'response',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    }).pipe(catchError(this.handleError('login', data)));
+  }  
+
+
+
   addPassenger(user: Passenger): Observable<Passenger>{    
-    var result = this.http.post<Passenger>(this.url+"passenger", user, httpOptions)
+    var result = this.http.post<Passenger>(this.url+"api/passenger", user, httpOptions)
     .pipe(catchError(this.handleError('addPassenger', user))
     );
     return result;
   }
   
-  login(user: Passenger): Observable<Passenger>{ 
-    var result = this.http.get<Passenger>(this.url + "passenger?email=" + user.Email, httpOptions).pipe(catchError(this.handleError('login', user)));
-   return result;
+  login(email, token): Observable<Passenger>{
+
+    //New httpHeaders necessary for authentication
+  const httpOptions2 = {
+    headers: new HttpHeaders(
+      {
+        'Authorization': "bearer " + token
+      })
+    };
+    return this.http.get<Passenger>(this.url + "api/passenger?email=" + email, httpOptions2).pipe(catchError(this.handleError('login', email)));
   }
 }

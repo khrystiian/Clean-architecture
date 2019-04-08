@@ -99,13 +99,20 @@ namespace TrainApp.Core.ApplicationService.Services
 
         public PassengerModel GetPassengerByEmail(string email)
         {
-
-            if (email == null)
+            PassengerModel passengerModel = new PassengerModel();
+            try
+            {
+                Passenger passenger = _passengerRepo.FindByEmail(email);
+                passengerModel = PassengerMapping.MapPassenger(passenger);
+            }
+            catch (Exception)
             {
                 log.Debug("Email is null.");
             }
-            var passenger =  _passengerRepo.FindByEmail(email);
-            return PassengerMapping.MapPassenger(passenger);
+
+            return passengerModel;
         }
+
+
     }
 }

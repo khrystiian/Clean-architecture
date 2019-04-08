@@ -17,7 +17,7 @@ namespace UI.Controllers
         }
 
         // GET: api/Passenger
-        [HttpGet]
+        [HttpGet]       
         public IList<PassengerModel> Get()
         {
             return _passengerService.ReadAllPassengers();
@@ -28,20 +28,30 @@ namespace UI.Controllers
         // POST: api/Passenger
         public void Post([FromBody]PassengerModel passenger)
         {
-            _passengerService.AddPassenger(passenger);           
-            if (passenger == null)
+            if (passenger != null) {
+                _passengerService.AddPassenger(passenger);
+            }
+            else
+            {
                 throw new HttpResponseException(System.Net.HttpStatusCode.NoContent);
+            }
         }
 
         [HttpGet]
+        [Authorize]
+        //Login
         // GET: api/Passenger/5
         public PassengerModel Get(string email)
         {
-            if (email == null)
+            if (email != null)
+            {
+                return _passengerService.GetPassengerByEmail(email);
+            }
+            else
             {
                 throw new HttpResponseException(System.Net.HttpStatusCode.NotFound);
             }
-            return _passengerService.GetPassengerByEmail(email);
+
         }
 
     }
