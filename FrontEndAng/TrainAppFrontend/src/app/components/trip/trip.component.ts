@@ -6,6 +6,7 @@ import { } from '@google/maps';
 import { FormControl } from '@angular/forms';
 import { RootObject, Step, TransitDetails, Leg } from 'src/app/shared/models/TripRootObject';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 declare var google: any;
 
@@ -56,7 +57,7 @@ export class TripComponent implements OnInit, DoCheck  {
     { value: 4, viewValue: 5 }
   ];
 
-  constructor(private tripService: TripService, private toastr: ToastrService) { }
+  constructor(private tripService: TripService, private toastr: ToastrService, private router: Router) { }
 
 
   ngOnInit() { 
@@ -99,9 +100,11 @@ export class TripComponent implements OnInit, DoCheck  {
 
   continue() {
     this.secondContainerFlag = true;
+    this.tripResponsePrice = undefined;
     if (localStorage.length === 0) {
         alert("Please Login or Register to order tickets")      
-      } else {
+    } else {
+      document.getElementById('right-panel').style.display = 'normal';
         document.getElementById("main-container").className = 'col-md-8';
         if (document.getElementById("second-container") !== null) {
           document.getElementById("second-container").className = 'col-md-4';
@@ -117,7 +120,6 @@ export class TripComponent implements OnInit, DoCheck  {
     root.Username = localStorage.getItem(localStorage.key(0));
 
     this.tripService.calculatePrice(this.rootObject).subscribe(response => this.getDataObject(response));
-    this.successmsg();
   }
 
   getDataObject(data: any) {
@@ -126,14 +128,18 @@ export class TripComponent implements OnInit, DoCheck  {
   }
 
   finish() {
-    this.switchToMainView();
-    document.getElementById('right-panel').style.display = 'none';
     var root: RootObject = { routes: [], status: this.tripResponsePrice > 0 ? true : false };
     this.tripService.confirmPayment(this.tripResponseID, root).subscribe(x => {
       //Optional features
     });
-    this.model = new TripForm;
- }
+    this.successmsg();
+    this.router.navigateByUrl('');
+  }
+
+  canceledPayment() {
+    this.infomsg();
+    this.router.navigateByUrl('');
+  }
 
   public initMap(model: TripForm): void {
     //Google Maps Center/Focus point
@@ -256,7 +262,12 @@ var rootObjectSteps: Step[] = [];
 
   //Toastr notification pop up
   successmsg() {
-    this.toastr.success("Trip create succesfully !", 'Success')
+    this.toastr.success("Ticked ordered succesfully !", 'Success')
+  }
+
+  //Toastr notification pop up
+  infomsg() {
+    this.toastr.info("Payment canceled !", "Info")
   }
 }
 

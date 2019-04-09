@@ -15,7 +15,7 @@ namespace Infrastructure.Repositories
 
         public bool UpdateStatus(string id, string status)
         {
-            Trip trip = base.FindFirst(x => x.ID == id);
+            Trip trip = base.FindFirst(x => x.Guid == id);
             if (trip != null)
             {
                 trip.Status = status;

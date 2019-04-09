@@ -5,46 +5,83 @@
 <br />
 <br />
 <div class="container">
-  <br />
-  <br />
-  <h2>Register</h2>
-  <br />
-  <br />
-  <form id="registerForm" (ngSubmit)="onSubmit()" #registerForm="ngForm">
-      <div class="form-group">
-          <label for="firstName">First Name</label>
-          <input type="text" class="form-control" id="firstName" placeholder="Type your first name" required
-            [(ngModel)]="model.FirstName" name="fistName" #firstName="ngModel" />
-        </div>
-    <br />
-    <div class="form-group">
-        <label for="lastName">Last Name</label>
-        <input type="text" class="form-control" id="lastName" placeholder="Type your last name" required
-          [(ngModel)]="model.LastName" name="lastName" #lastName="ngModel" />
-      </div>
-      <br />
-      <div class="form-group">
-          <label for="address">Address</label>
-          <input type="text" class="form-control" id="address" placeholder="Type your address" required
-            [(ngModel)]="model.Address" name="address" #address="ngModel" />
-        </div>
-    <br />
-    <div class="form-group">
-        <label for="email">Email</label>
-        <input type="text" class="form-control" id="email" placeholder="Type your email" required
-          [(ngModel)]="model.Email" name="email" #email="ngModel" />
-      </div>
-    <br />
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" placeholder="Type your password" required
-          [(ngModel)]="model.Password" name="password" #password="ngModel" />
-      </div>
-    <br />
-    <div class="form-group" style="text-align: center">
-      <button class="btn btn-primary" [disabled]="!registerForm.form.valid">Register</button>
-        <a href="login" class="btn btn-link">Cancel</a>
-    </div>
-  </form>
+  <div class="row">
 
+    <div class="col-md-2"></div>
+    <div class="col-md-8 jumbotron">
+      <h3>Register</h3><hr>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+        <div class="form-group">
+          <label for="FirstName">First name:</label>
+          <div class="input-group">
+            <div class="input-group-addon glyphicon glyphicon-user"></div>
+            <input type="text" placeholder="First name" formControlName="FirstName" maxlength="30" class="form-control">
+          </div>
+          <div class="alert alert-danger" *ngIf="form.controls['FirstName'].dirty && form.controls['FirstName'].invalid">
+            <div *ngIf="form.controls['FirstName'].hasError('required')">First name is required</div>
+          </div>
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="LastName">Last name:</label>
+          <div class="input-group">
+            <div class="input-group-addon glyphicon glyphicon-user"></div>
+            <input type="text" placeholder="Last name" formControlName="LastName" maxlength="30" class="form-control">
+          </div>
+          <div class="alert alert-danger" *ngIf="form.controls['LastName'].dirty && form.controls['LastName'].invalid">
+            <div *ngIf="form.controls['LastName'].hasError('required')">Last name is required</div>
+          </div>
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="Address">Address:</label>
+          <div class="input-group">
+            <div class="input-group-addon glyphicon glyphicon-user"></div>
+            <input type="text" placeholder="Address" formControlName="Address" maxlength="50" class="form-control">
+          </div>
+          <div class="alert alert-danger" *ngIf="form.controls['Address'].dirty && form.controls['Address'].invalid">
+            <div *ngIf="form.controls['Address'].hasError('required')">Address is required</div>
+          </div>
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="Email">Email:</label>
+          <div class="input-group">
+            <div class="input-group-addon glyphicon glyphicon-user"></div>
+            <input type="text" placeholder="Username/Email" formControlName="Email" maxlength="30" class="form-control">
+          </div>
+          <div class="alert alert-danger" *ngIf="form.controls['Email'].dirty && form.controls['Email'].invalid">
+            <div *ngIf="form.controls['Email'].hasError('required')">Username is required</div>
+          </div>
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="pwd">Password:</label>
+          <div class="input-group">
+            <div class="input-group-addon glyphicon glyphicon-lock"></div>
+            <input type="Password" placeholder="Password" formControlName="Password" class="form-control">
+          </div>
+          <div class="alert alert-danger" *ngIf="form.controls['Password'].dirty && form.controls['Password'].invalid">
+            <div *ngIf="form.controls['Password'].hasError('required')">Password is required</div>
+            <div *ngIf="form.controls['Password'].hasError('minlength')">Password must minlength 6 characters long.</div>
+          </div>
+        </div>
+        <br />
+        <div class="form-group" style="text-align: center">
+          <button class="btn btn-primary" [disabled]="form.invalid">Register</button>
+          <a href="login" class="btn btn-link">Cancel</a>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-12 alert alert-danger" *ngIf="errmsg">{{errmsg}}</div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-12 alert alert-success" *ngIf="successmsg">{{successmsg}}</div>
+        </div>
+
+      </form>
+    </div>
+  </div>
 </div>
+

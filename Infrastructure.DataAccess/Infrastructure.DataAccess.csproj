@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CC3548D9-13F5-47D0-B84E-09BB085220BA}</ProjectGuid>
+    <ProjectGuid>{2139DBBF-4A92-4A8A-ACCF-3A4C6305C62C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Infrastructure.DataAccess</RootNamespace>
@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -101,8 +102,8 @@
   <ItemGroup>
     <Content Include="TrainAppModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TrainAppModel.Context.cs</LastGenOutput>
       <DependentUpon>TrainAppModel.edmx</DependentUpon>
+      <LastGenOutput>TrainAppModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="TrainAppModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

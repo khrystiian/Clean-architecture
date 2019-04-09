@@ -37,7 +37,8 @@ export class PassengerService {
 
 
 
-  addPassenger(user: Passenger): Observable<Passenger>{    
+  addPassenger(user: Passenger): Observable<Passenger>{
+    this.navBarUsername.next(user.Email);
     var result = this.http.post<Passenger>(this.url+"api/passenger", user, httpOptions)
     .pipe(catchError(this.handleError('addPassenger', user))
     );

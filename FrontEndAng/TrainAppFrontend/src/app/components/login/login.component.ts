@@ -11,7 +11,6 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-  successmsg: any;
   errmsg: any;
 
   constructor(private router: Router, private passengerService: PassengerService) { }
@@ -29,9 +28,7 @@ export class LoginComponent implements OnInit {
       .subscribe(res => {
         if (res.status === 200){
           this.passengerService.login(this.form.value.username, res.body.access_token).subscribe((response) => {
-  
-           // localStorage.setItem("blank", "blank"); 
-            localStorage.setItem(response.FirstName, response.Email);
+              localStorage.setItem(response.FirstName, response.Email);
 
           })
           this.router.navigateByUrl('');

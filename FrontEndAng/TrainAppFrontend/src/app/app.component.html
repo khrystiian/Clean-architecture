@@ -12,7 +12,7 @@
   <span class="spacer"></span>
   <span *ngIf="firstName !== null" style="color:#cfcfcf"> Welcome {{firstName}} !</span>
   <span class="spacer2"></span>
-  <app-notification></app-notification>
+  <app-notification *ngIf="firstName !== null" ></app-notification>
   <span class="spacer2"></span>
   <span class="spacer2"></span>
   <a href="login" *ngIf="firstName === null" (click)="login()">Login/Register</a>

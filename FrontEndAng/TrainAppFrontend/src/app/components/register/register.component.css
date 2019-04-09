@@ -2,17 +2,17 @@
 
 .container{
     border: 3px double gray;
-    width: 40%;
-    height: 550px;
+    width: 100%;
+    height: auto;
     background-color: #E2EEF0
    }
 
    .ng-valid[required], .ng-valid.required  {
-    border-left: 5px solid #42A948; 
+    border-left: 3px solid #42A948; 
   }
   
   .ng-invalid:not(form)  {
-    border-left: 5px solid #a94442; 
+    border-left: 3px solid #a94442; 
   }
   label{
     float: left;

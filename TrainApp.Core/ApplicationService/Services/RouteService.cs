@@ -34,7 +34,7 @@ namespace TrainApp.Core.ApplicationService.Services
             }
             catch (Exception e)
             {
-                log.Fatal(e); //ERROR !!!!!!!!
+                log.Fatal(e); 
             }
         }
 

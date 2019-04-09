@@ -182,14 +182,18 @@
       <div class="btn-group" *ngIf="!tripResponsePrice" style="width:100% !important">
         <button type="button" class="btn btn-outline-info" (click)="calculateTripPrice()" [disabled]="passengersAge.value === null || !model.Seats"
                 style="margin-bottom:20px;">
-          Calculate price
+          Get trip cost
         </button>
       </div>
       <div class="btn-group" *ngIf="tripResponsePrice" style="width:100% !important">
-        <button type="button" class="btn btn-outline-success" (click)="finish()"
+        <a href="" type="button" class="btn btn-outline-success" (click)="finish()"
                 style="margin-bottom:20px;">
-          Confirm payment
-        </button>
+         Pay ticket
+        </a>
+        <a href="" type="button" class="btn btn-outline-success" (click)="canceledPayment()"
+                style="margin-bottom:20px;">
+          Cancel payment
+        </a>
       </div>
     </div>
   </div>

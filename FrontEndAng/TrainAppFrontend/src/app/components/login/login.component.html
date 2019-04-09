@@ -7,36 +7,39 @@
 <div class="container">
   <div class="row">
 
-    <div class="col-md-4"></div>
-    <div class="col-md-4 jumbotron">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 jumbotron">
       <h3>Login</h3><hr>
       <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
         <div class="form-group">
           <label for="uname">User Name:</label>
           <div class="input-group">
             <div class="input-group-addon glyphicon glyphicon-user"></div>
-            <input type="text" placeholder="username" formControlName="username" maxlength="30" class="form-control" >
+            <input type="text" placeholder="Email/Username" formControlName="username" maxlength="30" class="form-control">
           </div>
           <div class="alert alert-danger" *ngIf="form.controls['username'].dirty && form.controls['username'].invalid">
             <div *ngIf="form.controls['username'].hasError('required')">Username is required</div>
           </div>
         </div>
-
+        <br/>
+        <br />
         <div class="form-group">
           <label for="pwd">Password:</label>
           <div class="input-group">
             <div class="input-group-addon glyphicon glyphicon-lock"></div>
-            <input type="password" placeholder="password" formControlName="password" class="form-control">
+            <input type="password" placeholder="Password" formControlName="password" class="form-control">
           </div>
           <div class="alert alert-danger" *ngIf="form.controls['password'].dirty && form.controls['password'].invalid">
             <div *ngIf="form.controls['password'].hasError('required')">Password is required</div>
             <!--<div *ngIf="form.controls['password'].hasError('minlength')">Password must minlength 6 characters long.</div>-->
           </div>
         </div>
-        <br/>
-        <div class="form-group">
-          <input type="submit" value="Login" class="btn btn-primary" [disabled]="form.invalid">
+        <br />
+        <div class="form-group" style="text-align: center">
+          <button class="btn btn-primary" [disabled]="form.invalid">Login</button>
+          <a href="register" class="btn btn-link">Register</a>
         </div>
+
         <div class="form-group">
           <div class="col-md-12 alert alert-danger" *ngIf="errmsg">{{errmsg}}</div>
         </div>

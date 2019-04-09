@@ -15,7 +15,7 @@ namespace UI
             LegModel trip = new LegModel();
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlConString"].ConnectionString))
             {
-                using (SqlCommand cmd = new SqlCommand(@"SELECT [End_address],[Start_address],[Arrival_time],[Departure_time],[Duration],[Distance] FROM [dbo].[Trips]", con))
+                using (SqlCommand cmd = new SqlCommand(@"SELECT [Guid],[End_address],[Start_address],[Arrival_time],[Departure_time],[Duration],[Distance] FROM [dbo].[Trips]", con))
                 {
                     if (con.State != System.Data.ConnectionState.Open) { con.Open(); }
 
@@ -28,7 +28,7 @@ namespace UI
                     {
                         using (TrainAppEntities dc = new TrainAppEntities())
                         {
-                            var lastInserted = dc.Trips.ToList().LastOrDefault();
+                            Trip lastInserted = dc.Trips.ToList().OrderByDescending(x => x.ID).FirstOrDefault();
                             if (lastInserted != null)
                             {
                                 trip = TripMapping.TripMap(lastInserted);

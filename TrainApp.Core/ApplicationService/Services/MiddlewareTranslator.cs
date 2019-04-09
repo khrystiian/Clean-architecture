@@ -47,7 +47,7 @@ namespace TrainApp.Core.ApplicationService.ModelsMapping
             var r = root.Routes[0].Legs[0];
             Trip trip = new Trip
             {
-                ID = tripId, 
+                Guid = tripId, 
                 Arrival_time = r.Arrival_time,
                 Departure_time = r.Departure_time,
                 Distance = r.Distance,
