@@ -120,10 +120,6 @@ namespace TrainApp.Core.ApplicationService.Services
                 {
                     totalPrice += currentPrice + (distance / 2 + (distance / 2)); //123.45
                 }
-                else if (item.Contains("10 tickets"))
-                {
-                    totalPrice += (currentPrice + (distance / 3 + (distance / 2))) * 8;
-                }
             }
             return Math.Round(totalPrice, 2);
         }
@@ -134,7 +130,7 @@ namespace TrainApp.Core.ApplicationService.Services
         /// <param name="departureHour"></param>
         /// <param name="distance"></param>
         /// <returns></returns>
-        private double PriceByDepartureTime(int departureHour, double distance)
+        private double PriceByDepartureTime(int departureHour, double distance)  
         {
             switch (departureHour)
             {

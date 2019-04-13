@@ -96,7 +96,7 @@ namespace TrainApp.Core.ApplicationService.Services
                 log.Fatal(e);
             }
         }
-
+        // TEST C# INDEXERS
         public PassengerModel GetPassengerByEmail(string email)
         {
             PassengerModel passengerModel = new PassengerModel();
