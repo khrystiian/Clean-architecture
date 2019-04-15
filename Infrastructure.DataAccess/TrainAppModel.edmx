@@ -49,9 +49,9 @@
           </Key>
           <Property Name="ID" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="RouteID" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Arrival_time" Type="datetime" />
+          <Property Name="Arrival_time" Type="datetime" Nullable="false" />
           <Property Name="Arrival_stop" Type="nvarchar" MaxLength="50" />
-          <Property Name="Departure_time" Type="datetime" />
+          <Property Name="Departure_time" Type="datetime" Nullable="false" />
           <Property Name="Departure_stop" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Trips">
@@ -73,13 +73,13 @@
         </EntityType>
         <Association Name="FK_PassengersAge_Trips">
           <End Role="Trips" Type="Self.Trips" Multiplicity="1" />
-          <End Role="PassengersAge" Type="Self.PassengersAge" Multiplicity="0..1" />
+          <End Role="PassengersAge" Type="Self.PassengersAge" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Trips">
               <PropertyRef Name="Guid" />
             </Principal>
             <Dependent Role="PassengersAge">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="TripId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -214,9 +214,9 @@
           </Key>
           <Property Name="ID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RouteID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Arrival_time" Type="DateTime" Precision="3" />
+          <Property Name="Arrival_time" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Arrival_stop" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Departure_time" Type="DateTime" Precision="3" />
+          <Property Name="Departure_time" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Departure_stop" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Route" Relationship="Self.FK_TransitDetails_Routes" FromRole="TransitDetails" ToRole="Routes" />
         </EntityType>
@@ -237,7 +237,7 @@
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Passenger" Relationship="Self.FK_Trips_Passengers" FromRole="Trips" ToRole="Passengers" />
-          <NavigationProperty Name="PassengersAge" Relationship="Self.FK_PassengersAge_Trips" FromRole="Trips" ToRole="PassengersAge" />
+          <NavigationProperty Name="PassengersAges" Relationship="Self.FK_PassengersAge_Trips" FromRole="Trips" ToRole="PassengersAge" />
           <NavigationProperty Name="Routes" Relationship="Self.FK_Routes_Trips1" FromRole="Trips" ToRole="Routes" />
         </EntityType>
         <Association Name="FK_Trips_Passengers">
@@ -254,13 +254,13 @@
         </Association>
         <Association Name="FK_PassengersAge_Trips">
           <End Role="Trips" Type="Self.Trip" Multiplicity="1" />
-          <End Role="PassengersAge" Type="Self.PassengersAge" Multiplicity="0..1" />
+          <End Role="PassengersAge" Type="Self.PassengersAge" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Trips">
               <PropertyRef Name="Guid" />
             </Principal>
             <Dependent Role="PassengersAge">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="TripId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

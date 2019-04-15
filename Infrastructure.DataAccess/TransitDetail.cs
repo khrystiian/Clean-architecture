@@ -16,9 +16,9 @@ namespace Infrastructure.DataAccess
     {
         public string ID { get; set; }
         public string RouteID { get; set; }
-        public Nullable<System.DateTime> Arrival_time { get; set; }
+        public System.DateTime Arrival_time { get; set; }
         public string Arrival_stop { get; set; }
-        public Nullable<System.DateTime> Departure_time { get; set; }
+        public System.DateTime Departure_time { get; set; }
         public string Departure_stop { get; set; }
     
         public virtual Route Route { get; set; }

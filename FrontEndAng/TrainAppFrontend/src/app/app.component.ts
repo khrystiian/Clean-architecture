@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PassengerService } from './shared/services/passenger.service';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-root',
@@ -18,14 +21,9 @@ export class AppComponent implements OnInit {
         this.firstName = email;
       })
     }
-
   }
 
-
   login() { }
-
-
-
   logout() {
     localStorage.clear();
   }

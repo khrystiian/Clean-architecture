@@ -23,9 +23,10 @@ namespace Infrastructure.Repositories
 
             return base.Edit(trip);
         }
-        
+
+        public IEnumerable<Trip> GetAll() => base.ReadAll();
+
         public void AddList(List<Trip> ts) => throw new NotImplementedException();
         public Trip FindByEmail(string email) => throw new NotImplementedException();
-        public IEnumerable<Trip> GetAll() => throw new NotImplementedException();
     }
 }

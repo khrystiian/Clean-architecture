@@ -3,11 +3,12 @@ import { NgModule } from '@angular/core';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {MatInputModule, MatSelectModule, MatCheckboxModule, MatSidenavModule, MatButtonModule, MatIconModule, MatToolbarModule, MatListModule, MatDialogModule} from '@angular/material';
+import { MatInputModule, MatSelectModule, MatCheckboxModule, MatSidenavModule, MatButtonModule, MatIconModule, MatToolbarModule, MatListModule, MatDialogModule, MatAutocompleteModule} from '@angular/material';
 import {MatRadioModule} from '@angular/material/radio';
 import { AgmCoreModule } from '@agm/core';
 import { AgmDirectionModule } from 'agm-direction'
-import { ToastrModule } from 'ngx-toastr';  
+import { ToastrModule } from 'ngx-toastr';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,13 +22,15 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NotificationComponent } from './components/notification/notification.component';
+import { ElasticsearchComponent } from './components/elasticsearch/elasticsearch.component';
 @NgModule({
   declarations: [
     AppComponent,
     TripComponent,
     LoginComponent,
     RegisterComponent,
-    NotificationComponent
+    NotificationComponent,
+    ElasticsearchComponent
   ],
   imports: [
     BrowserModule,
@@ -46,8 +49,12 @@ import { NotificationComponent } from './components/notification/notification.co
     MatIconModule,
     MatSidenavModule,
     MatCheckboxModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatPaginatorModule,
     AgmCoreModule.forRoot({
       //Google maps API Key
+ apiKey: 'AIzaSyBymUNgedD8zJ3CRo6ZlrKk99WFBWWi-94'
     }),
     AgmDirectionModule,
     LayoutModule,

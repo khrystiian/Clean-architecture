@@ -1,6 +1,10 @@
 ﻿using Infrastructure.DataAccess;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using TrainApp.Core.ApplicationService.Interfaces;
+using TrainApp.Core.ApplicationService.ModelsMapping;
+using TrainApp.Core.Entity;
 
 namespace TrainApp.Core.ApplicationService.Services
 {
@@ -32,5 +36,17 @@ namespace TrainApp.Core.ApplicationService.Services
                 log.Fatal(e);
             }
         }
+
+        public IEnumerable<LegModel> GetAllTrips()
+        {
+            var legModels = new List<LegModel>();
+            var trips = _tripRepo.GetAll();
+            foreach (var item in trips)
+            {
+                legModels.Add(TripMapping.TripMap(item));
+            }
+            return legModels;
+        }
+
     }
 }

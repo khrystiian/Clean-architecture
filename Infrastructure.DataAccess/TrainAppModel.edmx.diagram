@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3da1b4abac6c4553bf141dd545ce8d92" Name="Diagram1">
+      <Diagram DiagramId="08ea2a71d9ff41a6ac749edd21aa2f13" Name="Diagram1">
         <EntityTypeShape EntityType="TrainAppModel.Passenger" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TrainAppModel.PassengersAge" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="TrainAppModel.Route" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />

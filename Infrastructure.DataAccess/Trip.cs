@@ -17,6 +17,7 @@ namespace Infrastructure.DataAccess
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Trip()
         {
+            this.PassengersAges = new HashSet<PassengersAge>();
             this.Routes = new HashSet<Route>();
         }
     
@@ -34,7 +35,8 @@ namespace Infrastructure.DataAccess
         public string Status { get; set; }
     
         public virtual Passenger Passenger { get; set; }
-        public virtual PassengersAge PassengersAge { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PassengersAge> PassengersAges { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Route> Routes { get; set; }
     }
