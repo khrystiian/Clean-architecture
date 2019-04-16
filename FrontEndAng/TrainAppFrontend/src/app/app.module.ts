@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule, MatSelectModule, MatCheckboxModule, MatSidenavModule, MatButtonModule, MatIconModule, MatToolbarModule, MatListModule, MatDialogModule, MatAutocompleteModule} from '@angular/material';
+import { MatInputModule, MatSelectModule, MatCheckboxModule, MatSidenavModule, MatButtonModule, MatIconModule, MatToolbarModule, MatListModule, MatDialogModule, MatAutocompleteModule, MatTableDataSource, MatTableModule} from '@angular/material';
 import {MatRadioModule} from '@angular/material/radio';
 import { AgmCoreModule } from '@agm/core';
 import { AgmDirectionModule } from 'agm-direction'
@@ -34,6 +34,7 @@ import { ElasticsearchComponent } from './components/elasticsearch/elasticsearch
   ],
   imports: [
     BrowserModule,
+    MatTableModule,
     AppRoutingModule,
     OwlDateTimeModule, 
     OwlNativeDateTimeModule,
@@ -54,7 +55,6 @@ import { ElasticsearchComponent } from './components/elasticsearch/elasticsearch
     MatPaginatorModule,
     AgmCoreModule.forRoot({
       //Google maps API Key
- apiKey: 'AIzaSyBymUNgedD8zJ3CRo6ZlrKk99WFBWWi-94'
     }),
     AgmDirectionModule,
     LayoutModule,
