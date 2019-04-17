@@ -4,7 +4,7 @@ using System;
 
 namespace TrainApp.Core.ApplicationService.Services.Elasticsearch
 {
-    public class ElasticsearchSetup
+    public class MultiNodesConnectionSetup
     {
         private static readonly string _uri = "http://localhost:9200";
         private static readonly object LevelLock = new object();
@@ -33,7 +33,7 @@ namespace TrainApp.Core.ApplicationService.Services.Elasticsearch
         }
 
 
-        public static IElasticClient ElasticLowLevelClient
+        public static IElasticClient ElasticClient
         {
             get
             {

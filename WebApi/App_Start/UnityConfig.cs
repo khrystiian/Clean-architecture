@@ -4,6 +4,8 @@ using System.Web.Http;
 using TrainApp.Core.ApplicationService;
 using TrainApp.Core.ApplicationService.Interfaces;
 using TrainApp.Core.ApplicationService.Services;
+using TrainApp.Core.ApplicationService.Services.Elasticsearch;
+using TrainApp.Core.DomainService;
 using TrainApp.Core.Entity;
 using UI.Controllers;
 using Unity;
@@ -42,6 +44,9 @@ namespace UI
 
             container.RegisterType<IEntityRepository<RouteSeat>, EntityRepository<TrainAppEntities, RouteSeat>>();
             container.RegisterType<IRepository<RouteSeat>, RouteSeatsRepository>();
+
+            container.RegisterType<IElasticsearchLogic, ElasticsearchLogic>();
+
 
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);

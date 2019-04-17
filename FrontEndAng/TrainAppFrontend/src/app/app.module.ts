@@ -23,6 +23,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NotificationComponent } from './components/notification/notification.component';
 import { ElasticsearchComponent } from './components/elasticsearch/elasticsearch.component';
+import { ElasticsearchDialogComponent } from './components/elasticsearch-dialog/elasticsearch-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,8 +31,10 @@ import { ElasticsearchComponent } from './components/elasticsearch/elasticsearch
     LoginComponent,
     RegisterComponent,
     NotificationComponent,
-    ElasticsearchComponent
+    ElasticsearchComponent,
+    ElasticsearchDialogComponent
   ],
+  entryComponents: [ElasticsearchDialogComponent],
   imports: [
     BrowserModule,
     MatTableModule,
@@ -44,7 +47,6 @@ import { ElasticsearchComponent } from './components/elasticsearch/elasticsearch
     MatInputModule,
     MatSelectModule,
     MatRadioModule,
-    MatDialogModule,
     HttpClientModule,
     MatButtonModule,
     MatIconModule,
@@ -53,6 +55,7 @@ import { ElasticsearchComponent } from './components/elasticsearch/elasticsearch
     MatAutocompleteModule,
     MatInputModule,
     MatPaginatorModule,
+    MatDialogModule,
     AgmCoreModule.forRoot({
       //Google maps API Key
     }),
@@ -75,7 +78,8 @@ import { ElasticsearchComponent } from './components/elasticsearch/elasticsearch
     TripService,
     MessageService,
     HttpErrorHandler,
-    LoginComponent
+    LoginComponent,
+    MatDialogModule,
   ],
   bootstrap: [AppComponent]
 })

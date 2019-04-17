@@ -2,13 +2,15 @@
   <mat-form-field class="search-full-width">
     <i class="fa fa-search" style="float:right"></i>
 
-    <input matInput placeholder="Search" aria-label="State" [matAutocomplete]="auto" [formControl]="stateCtrl" (click)="search()">
+    <input matInput placeholder="Search" aria-label="State" [matAutocomplete]="auto" [formControl]="stateCtrl" >
     <mat-autocomplete #auto="matAutocomplete">
+
       <mat-option *ngFor="let state of filteredStates | async; index as i" [value]="state.name">
         <img class="search-option-img" aria-hidden [src]="state.flag" height="25">
         <span>{{i}} -- {{state.name}}</span> |
         <small>Population: {{state.population}}</small>
       </mat-option>
+
       <mat-paginator #paginator [length]="length"
                      [pageSize]="pageSize"
                      (page)="pageEvent = handlePage($event)">

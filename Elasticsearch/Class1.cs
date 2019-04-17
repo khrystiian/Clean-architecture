@@ -100,14 +100,13 @@ namespace ElasticSearchPractice
         {
             var searchResponse = lowLevelClient.Search<BytesResponse>("legs", "trip", PostData.Serializable(new
             {
-                //from = 0,
-                //size = 10,
+                from = 0,
+                size = 5,
                 query = new
                 {
                     match = new
                     {
-                        field = "Start_address",
-                        query = "Vejle"
+                        Start_address = "Vejle"
                     }
                 }
             }));
@@ -115,8 +114,9 @@ namespace ElasticSearchPractice
             var successful = searchResponse.Success;
             var successOrKnownError = searchResponse.SuccessOrKnownError;
             var exception = searchResponse.OriginalException;
-            var responseJson = searchResponse.Body;
-  
+            var responseBytes = searchResponse.Body;
+            var result = Encoding.UTF8.GetString(responseBytes);
+
         }
 
         private void Search2(IElasticLowLevelClient lowLevelClient)
@@ -126,8 +126,7 @@ namespace ElasticSearchPractice
 
     ""query"": {
         ""match"": {
-            ""field"": ""Start_address"",
-            ""query"": ""Vejle""
+            ""Start_address"": ""Vejle""
         }
     }
 }");
@@ -142,7 +141,7 @@ namespace ElasticSearchPractice
         private void ElasticsearchConfigMultiNodes()
         {
             // Singleton configuration
-            var client = ElasticsearchSetup.ElasticLowLevelClient;
+            var client = MultiNodesConnectionSetup.ElasticClient;
 
 
             //Serialize and Index to Elasticsearch

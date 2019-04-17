@@ -78,6 +78,7 @@
     <Compile Include="ApplicationService\Interfaces\ITripService.cs" />
     <Compile Include="ApplicationService\LogHelper.cs" />
     <Compile Include="ApplicationService\ModelsMapping\TripMapping.cs" />
+    <Compile Include="ApplicationService\Services\Elasticsearch\ElasticsearchLogic.cs" />
     <Compile Include="ApplicationService\Services\Elasticsearch\MultiNodesConnectionSetup.cs" />
     <Compile Include="ApplicationService\Services\RabbitMq\RabbitMqService.cs" />
     <Compile Include="ApplicationService\Services\Elasticsearch\SingleNodeConnectionSetup.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="ApplicationService\Services\PriceLogic.cs" />
     <Compile Include="ApplicationService\Services\TransitDetailService.cs" />
     <Compile Include="ApplicationService\Services\TripService.cs" />
+    <Compile Include="DomainService\IElasticsearchLogic.cs" />
     <Compile Include="DomainService\IRepository.cs" />
     <Compile Include="ApplicationService\Interfaces\IPassengerService.cs" />
     <Compile Include="ApplicationService\ModelsMapping\PassengerMapping.cs" />

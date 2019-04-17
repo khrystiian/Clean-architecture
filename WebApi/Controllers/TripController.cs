@@ -1,8 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using TrainApp.Core.ApplicationService.Services;
+using TrainApp.Core.DomainService;
 using TrainApp.Core.Entity;
 
 namespace UI.Controllers
@@ -10,17 +9,20 @@ namespace UI.Controllers
     public class TripController : ApiController
     {
         private readonly PriceLogic _rootService;
+        private readonly IElasticsearchLogic elasticsearch;
 
-        public TripController(PriceLogic rootService)
+        public TripController(PriceLogic rootService, IElasticsearchLogic _elasticsearch)
         {
             _rootService = rootService ?? throw new ArgumentNullException(nameof(_rootService));
+            elasticsearch = _elasticsearch ?? throw new ArgumentNullException(nameof(elasticsearch));
         }
 
         //GET:api/Trip/trip
-        //public LegModel Get(string id)
-        //{
-        //    return _rootService.GetTripById(id);
-        //}
+        [HttpGet]
+        public string Get(string search)
+        {
+            return elasticsearch.IndexSearch(search);
+        }
 
         [HttpPost]
         // POST: api/Trip

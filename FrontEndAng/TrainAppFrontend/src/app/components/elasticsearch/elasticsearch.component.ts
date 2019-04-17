@@ -1,10 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, filter } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { PageEvent, MatPaginator } from '@angular/material';
+import { PageEvent, MatPaginator, MatDialog } from '@angular/material';
 import { ElasticsearchService } from '../../shared/services/elasticsearch.service';
-import { from } from 'rxjs';
+import { ElasticsearchDialogComponent } from '../elasticsearch-dialog/elasticsearch-dialog.component';
+
+export interface DialogData {
+  animal: string;
+  name: string;
+}
 
 export interface State {
   flag: string;
@@ -18,6 +23,8 @@ export interface State {
   styleUrls: ['./elasticsearch.component.css']
 })
 export class ElasticsearchComponent implements OnInit {
+  animal: string;
+  name: string;
   stateCtrl = new FormControl();
   filteredStates: Observable<State[]>;
 
@@ -140,7 +147,7 @@ export class ElasticsearchComponent implements OnInit {
     }
   ];
 
-  constructor(private elasticsearchService: ElasticsearchService) {
+  constructor(private elasticsearchService: ElasticsearchService, public dialog: MatDialog) {
     this.mapSearch(0,4);
     this.length = this.states.length;
   }
@@ -170,7 +177,20 @@ export class ElasticsearchComponent implements OnInit {
 
   private _filterStates(value: string): State[] {
     const filterValue = value.toLowerCase();
-    return this.states.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
+    //this.elasticsearchService.search(filterValue).subscribe(response => {
+    //  console.log(response);
+    //})
+
+    //DIALOG BOX
+    var filteredOption = this.states.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
+    this.dialog.open(ElasticsearchDialogComponent, {
+      width: '40%',
+      height: 'auto',
+      disableClose: false,      
+      data: { name: filteredOption[0].name, population: filteredOption[0].population, flag: filteredOption[0].flag }
+    });
+       
+    return filteredOption;
   }
 
   private mapSearch(first?: number, last?: number) {
@@ -180,11 +200,4 @@ export class ElasticsearchComponent implements OnInit {
         map(state => state ? this._filterStates(state) : this.states.slice(first,last))
       );
   }
-
-  search() {
-    this.elasticsearchService.search().subscribe(response => {
-      //Console.log(response);
-    })
-  }
-
-}
+ }
