@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { DialogData } from '../elasticsearch/elasticsearch.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Leg } from '../../shared/models/TripRootObject';
 
 @Component({
   selector: 'app-elasticsearch-dialog',
@@ -11,7 +11,7 @@ export class ElasticsearchDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<ElasticsearchDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: Leg) { }
 
   onNoClick(): void {
     this.dialogRef.close();

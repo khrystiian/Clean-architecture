@@ -39,6 +39,7 @@
     "core-js": "^2.5.4",
     "cors": "^2.8.5",
     "depcheck": "^0.7.1",
+    "diacritic-regex": "^1.0.0",
     "ionic": "^4.10.3",
     "md-icons": "^1.0.0",
     "ng-pick-datetime": "^7.0.0",

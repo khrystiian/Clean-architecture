@@ -14,17 +14,18 @@
     }
 
     export class Leg {
-        arrival_time: Date;
-        departure_time: Date;
-        distance: string;
-        duration: string;
-        end_address: string;
-        start_address: string;
-        steps: Step[];
-        routePreference: string;
-        passengersAge: string[];
-        seats: number;
-        Username: string;
+        Arrival_time: Date;
+        Departure_time: Date;
+        Distance: string;
+        Duration: string;
+        End_address: string;
+        Start_address: string;
+        Steps: Step[];
+        RoutePreference: string;
+        PassengersAge: string[];
+        Seats: number;
+      Username: string;
+      Price: number;
     }
 
     export class Route {

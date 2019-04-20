@@ -5,10 +5,9 @@
     <input matInput placeholder="Search" aria-label="State" [matAutocomplete]="auto" [formControl]="stateCtrl" >
     <mat-autocomplete #auto="matAutocomplete">
 
-      <mat-option *ngFor="let state of filteredStates | async; index as i" [value]="state.name">
-        <img class="search-option-img" aria-hidden [src]="state.flag" height="25">
-        <span>{{i}} -- {{state.name}}</span> |
-        <small>Population: {{state.population}}</small>
+      <mat-option *ngFor="let state of filteredStates | async; index as i" [value]="state.Start_address" (click)="openDialog(state)">
+        <span>{{state.Start_address}}</span> |
+        <small>Destination: {{state.End_address}}</small>
       </mat-option>
 
       <mat-paginator #paginator [length]="length"

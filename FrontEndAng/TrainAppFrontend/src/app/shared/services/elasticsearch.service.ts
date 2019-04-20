@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { HttpErrorHandler, HandleError } from './http-error-handler.service';
 import { catchError } from 'rxjs/operators';
+import { RootObject } from '../models/TripRootObject';
 
 const httpOptions = {
   //headers: new HttpHeaders({
@@ -27,6 +28,6 @@ export class ElasticsearchService {
   }
 
   search(search: string): Observable<any> {
-    return this.http.get<any>(this.url +"api/trip?search=" + search, httpOptions).pipe(catchError(this.handleError('search', search)));
+    return this.http.get<any>(this.url + "api/trip?search=" + search, httpOptions).pipe(catchError(this.handleError('search', search)));
   }
 }

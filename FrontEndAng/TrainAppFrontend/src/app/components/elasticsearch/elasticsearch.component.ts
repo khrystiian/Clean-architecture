@@ -2,20 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { startWith, map, filter } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { PageEvent, MatPaginator, MatDialog } from '@angular/material';
+import { MatPaginator, MatDialog } from '@angular/material';
 import { ElasticsearchService } from '../../shared/services/elasticsearch.service';
 import { ElasticsearchDialogComponent } from '../elasticsearch-dialog/elasticsearch-dialog.component';
+import { Leg } from '../../shared/models/TripRootObject';
 
-export interface DialogData {
-  animal: string;
-  name: string;
-}
-
-export interface State {
-  flag: string;
-  name: string;
-  population: string;
-}
 
 @Component({
   selector: 'app-elasticsearch',
@@ -23,10 +14,25 @@ export interface State {
   styleUrls: ['./elasticsearch.component.css']
 })
 export class ElasticsearchComponent implements OnInit {
-  animal: string;
-  name: string;
+  diacritics: any = {
+  a: 'ÀÁÂÃÄÅàáâãäåĀāąĄ',
+  c: 'ÇçćĆčČ',
+  d: 'đĐďĎ',
+  e: 'ÈÉÊËèéêëěĚĒēęĘ',
+  i: 'ÌÍÎÏìíîïĪī',
+  l: 'łŁ',
+  n: 'ÑñňŇńŃ',
+  o: 'ÒÓÔÕÕÖØòóôõöøŌō',
+  r: 'řŘ',
+  s: 'ŠšśŚȘș',
+  t: 'ťŤȚț',
+  u: 'ÙÚÛÜùúûüůŮŪū',
+  y: 'ŸÿýÝ',
+  z: 'ŽžżŻźŹ'
+}
+  legResults: Leg[];
   stateCtrl = new FormControl();
-  filteredStates: Observable<State[]>;
+  filteredStates: Observable<Leg[]>;
 
   // MatPaginator Inputs
   length = 0;
@@ -35,125 +41,12 @@ export class ElasticsearchComponent implements OnInit {
   // MatPaginator Output
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-
-  states: State[] = [
-    {
-      name: 'Arkansas',
-      population: '2.978M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Arkansas.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/9/9d/Flag_of_Arkansas.svg'
-    },
-    {
-      name: 'Calitdrnia',
-      population: '39.14M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_California.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg'
-    },
-    {
-      name: 'Disney',
-      population: '39.14M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_California.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg'
-    },
-    {
-      name: 'Florida',
-      population: '20.27M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Florida.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Florida.svg'
-    },
-    {
-      name: 'Texas',
-      population: '27.47M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Texas.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Texas.svg'
-    },
-    {
-      name: 'New York',
-      population: '39.14M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_California.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg'
-    },
-    {
-      name: 'Samsung',
-      population: '20.27M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Florida.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Florida.svg'
-    },
-    {
-      name: 'Mexic',
-      population: '27.47M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Texas.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Texas.svg'
-    },
-    {
-      name: 'Canada',
-      population: '39.14M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_California.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg'
-    },
-    {
-      name: 'Las Vegas',
-      population: '20.27M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Florida.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Florida.svg'
-    },
-    {
-      name: 'Cal Log',
-      population: '27.47M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Texas.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Texas.svg'
-    },
-    {
-      name: 'Kolding',
-      population: '20.27M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Florida.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Florida.svg'
-    },
-    {
-      name: 'Vejen',
-      population: '27.47M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Texas.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/800px-Flag_of_France.svg.png'
-    },
-    {
-      name: 'Vejle',
-      population: '39.14M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_California.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/720px-Flag_of_Brazil.svg.png'
-    },
-    {
-      name: 'Las Herning',
-      population: '20.27M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Florida.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flag_of_Romania.svg/600px-Flag_of_Romania.svg.png'
-    },
-    {
-      name: 'Aalborg',
-      population: '27.47M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Texas.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Flag_of_Denmark.svg/740px-Flag_of_Denmark.svg'
-    },
-    {
-      name: 'China',
-      population: '20.27M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Florida.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flag_of_Romania.svg/600px-Flag_of_Romania.svg.png'
-    },
-    {
-      name: 'Japan',
-      population: '27.47M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Texas.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Flag_of_Denmark.svg/740px-Flag_of_Denmark.svg'
-    }
-  ];
-
   constructor(private elasticsearchService: ElasticsearchService, public dialog: MatDialog) {
-    this.mapSearch(0,4);
-    this.length = this.states.length;
+    this.legResults = [];
+    this.mapSearch(0, 4);
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 
   public handlePage(e: any) {
@@ -165,39 +58,77 @@ export class ElasticsearchComponent implements OnInit {
     if (e.previousPageIndex < e.pageIndex) {
       first += (e.previousPageIndex * e.pageSize);
       last += (e.pageIndex * e.pageSize);
-
       this.mapSearch(first, last);
     }
-    else if(e.previousPageIndex > e.pageIndex)  {
+    else if (e.previousPageIndex > e.pageIndex) {
       first = (e.pageIndex * e.pageSize);
       last = (e.previousPageIndex * e.pageSize);
       this.mapSearch(first, last)
     }
   }
 
-  private _filterStates(value: string): State[] {
-    const filterValue = value.toLowerCase();
-    //this.elasticsearchService.search(filterValue).subscribe(response => {
-    //  console.log(response);
-    //})
 
-    //DIALOG BOX
-    var filteredOption = this.states.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
+  elasticSearch(filterValue: string) {
+    //CALL ELASTICSEARCH IN THE SERVER
+    this.elasticsearchService.search(filterValue).subscribe(response => {
+      this.legResults = [];
+
+      for (var i = 0; i < JSON.parse(response).hits.hits.length; i++) {
+        this.legResults.push(JSON.parse(response).hits.hits[i]._source);
+      }
+      this.length = this.legResults.length;
+    })
+  }
+
+  openDialog(searchedObj: Leg) {
     this.dialog.open(ElasticsearchDialogComponent, {
       width: '40%',
       height: 'auto',
-      disableClose: false,      
-      data: { name: filteredOption[0].name, population: filteredOption[0].population, flag: filteredOption[0].flag }
+      disableClose: false,
+      data: {
+        From: searchedObj.Start_address,
+        To: searchedObj.End_address,
+        Arrival: searchedObj.Arrival_time,
+        Departure: searchedObj.Departure_time,
+        Distance: searchedObj.Distance,
+        Duration: searchedObj.Duration,
+        Price: searchedObj.Price,
+        Preference: searchedObj.RoutePreference,
+        Routes: searchedObj.Steps
+      }
     });
-       
-    return filteredOption;
+  }
+
+
+  private _filterStates(value: string): Leg[] {
+
+    const filterValue = value.toLowerCase();
+    this.elasticSearch(filterValue);
+
+    return this.legResults.filter(state => this.replaceDiacritics(state.Start_address.toLowerCase()).indexOf(filterValue) === 0);
   }
 
   private mapSearch(first?: number, last?: number) {
+    this.legResults = [];
+
     this.filteredStates = this.stateCtrl.valueChanges
       .pipe(
         startWith(''),
-        map(state => state ? this._filterStates(state) : this.states.slice(first,last))
-      );
+        map(state => state ? this._filterStates(state) : this.legResults.slice(first, last))
+    );
   }
- }
+
+  replaceDiacritics(text):string {
+    for (var toLetter in this.diacritics) if (this.diacritics.hasOwnProperty(toLetter)) {
+      for (var i = 0, ii = this.diacritics[toLetter].length, fromLetter, toCaseLetter; i < ii; i++) {
+        fromLetter = this.diacritics[toLetter][i];
+        if (text.indexOf(fromLetter) < 0) continue;
+        toCaseLetter = fromLetter == fromLetter.toUpperCase() ? toLetter.toUpperCase() : toLetter;
+        text = text.replace(new RegExp(fromLetter, 'g'), toCaseLetter);
+      }
+    }
+    return text;
+  }
+
+}
+

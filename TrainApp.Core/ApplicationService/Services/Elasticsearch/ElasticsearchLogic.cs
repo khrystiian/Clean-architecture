@@ -88,14 +88,15 @@ namespace TrainApp.Core.ApplicationService.Services.Elasticsearch
                         match = new
                         {
                             Start_address = input
-                        }
+                        },
                     }
                 }));
                 //var successful = searchResponse.Success;
                 //var successOrKnownError = searchResponse.SuccessOrKnownError;
                 //var exception = searchResponse.OriginalException;
                 var responseBytes = searchResponse.Body;
-                return Encoding.UTF8.GetString(responseBytes);
+                var b = Encoding.UTF8.GetString(responseBytes);
+                return b;
             }
             else
             {

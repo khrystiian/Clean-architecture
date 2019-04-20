@@ -115,8 +115,8 @@ export class TripComponent implements OnInit, DoCheck  {
 
   calculateTripPrice() { 
     var root = this.rootObject.routes[0].legs[0];
-    root.passengersAge = this.passengersAgeList;
-    root.seats = this.model.Seats;
+    root.PassengersAge = this.passengersAgeList;
+    root.Seats = this.model.Seats;
     root.Username = localStorage.getItem(localStorage.key(0));
 
     this.tripService.calculatePrice(this.rootObject).subscribe(response => this.getDataObject(response));
@@ -241,17 +241,18 @@ var rootObjectSteps: Step[] = [];
    this.rootObject = {
      routes: [{
        legs: [{
-        arrival_time: response.arrival_time.value,
-        departure_time: response.departure_time.value,
-        distance: response.distance.text,
-        duration: response.duration.text,
-        end_address: response.end_address,
-        start_address: response.start_address,
-        steps: rootObjectSteps,
-        passengersAge: null,
-        routePreference: tripPreference,
-        seats: 1,
-         Username: null
+        Arrival_time: response.arrival_time.value,
+        Departure_time: response.departure_time.value,
+        Distance: response.distance.text,
+        Duration: response.duration.text,
+        End_address: response.end_address,
+        Start_address: response.start_address,
+        Steps: rootObjectSteps,
+        PassengersAge: [],
+        RoutePreference: tripPreference,
+        Seats: 1,
+         Username: null,
+         Price: 0
        }]
      }],
      status: false
